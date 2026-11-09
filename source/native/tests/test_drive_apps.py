@@ -1,4 +1,4 @@
-"""Verify the two new workers on a simulated HSFZ gateway."""
+"""Verify the app workers on a simulated HSFZ gateway."""
 from pathlib import Path
 import socket
 import struct
@@ -69,9 +69,9 @@ class DriveAppsTest(unittest.TestCase):
             listener.settimeout(2)
             self.run_worker("shift-deck", ["--cycles", "1", "--udp-port", str(listener.getsockname()[1])],
                             [("010c", ["410c61a8"]), ("010d", ["410d64"])])
-            sampled_ms, rpm, kph = struct.unpack("=Qii", listener.recv(64))
+            sampled_ms, rpm, kph, gear, reserved = struct.unpack("=Qiiii", listener.recv(64))
             self.assertGreater(sampled_ms, 0)
-            self.assertEqual((rpm,kph), (6250,100))
+            self.assertEqual((rpm,kph,gear,reserved), (6250,100,0,0))
 
 
     def test_shift_worker_waits_for_a_busy_gateway(self):

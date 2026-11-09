@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='utf-8'?>
+<pluginApps>
+  <pluginApp applicationType="VehicleInformation" applicationWeight="213" text="Fault Scanner">
+    <entryButton id="1" action="10">
+      <properties>
+        <property id="23" value="2" />
+      </properties>
+    </entryButton>
+    <actions>
+      <hmiAction id="10" target="100" />
+      <hmiAction id="40" target="101" />
+      <raAction id="41" />
+      <raAction id="42" />
+      <raAction id="43" />
+      <raAction id="44" />
+      <raAction id="45" />
+    </actions>
+    <models>
+      <raDataModel id="50" modelType="Richtext" />
+      <raDataModel id="51" modelType="Richtext" />
+      <raDataModel id="52" modelType="Richtext" />
+      <raDataModel id="53" modelType="Richtext" />
+      <raDataModel id="54" modelType="Richtext" />
+      <raDataModel id="55" modelType="Richtext" />
+      <raDataModel id="56" modelType="Richtext" />
+      <raDataModel id="57" modelType="Richtext" />
+      <raDataModel id="58" modelType="Richtext" />
+      <raDataModel id="60" modelType="Richtext" />
+      <raDataModel id="61" modelType="Richtext" />
+    </models>
+    <hmiStates>
+      <hmiState id="100" text="Fault Scanner">
+        <optionComponents>
+          <button id="30" action="41" text="Scan all modules" />
+          <button id="31" action="42" text="Next page" />
+          <button id="32" action="43" text="Previous page" />
+          <button id="33" action="40" text="Clear fault codes" />
+        </optionComponents>
+        <components>
+          <label id="150" model="50">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="16" />
+              <property id="9" value="1176" />
+              <property id="10" value="50" />
+            </properties>
+          </label>
+          <label id="151" model="51">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="70" />
+              <property id="9" value="1176" />
+              <property id="10" value="46" />
+            </properties>
+          </label>
+          <label id="152" model="52">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="118" />
+              <property id="9" value="1176" />
+              <property id="10" value="46" />
+            </properties>
+          </label>
+          <label id="153" model="53">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="166" />
+              <property id="9" value="1176" />
+              <property id="10" value="46" />
+            </properties>
+          </label>
+          <label id="154" model="54">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="214" />
+              <property id="9" value="1176" />
+              <property id="10" value="46" />
+            </properties>
+          </label>
+          <label id="155" model="55">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="262" />
+              <property id="9" value="1176" />
+              <property id="10" value="46" />
+            </properties>
+          </label>
+          <label id="156" model="56">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="310" />
+              <property id="9" value="1176" />
+              <property id="10" value="46" />
+            </properties>
+          </label>
+          <label id="157" model="57">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="358" />
+              <property id="9" value="1176" />
+              <property id="10" value="46" />
+            </properties>
+          </label>
+          <label id="158" model="58">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="406" />
+              <property id="9" value="1176" />
+              <property id="10" value="46" />
+            </properties>
+          </label>
+        </components>
+      </hmiState>
+      <hmiState id="101" parentId="100" text="Clear fault codes">
+        <components>
+          <label id="300" model="60" />
+          <label id="301" model="61" />
+          <button id="302" action="44" text="Clear engine (DME) codes" />
+          <button id="303" action="45" text="Clear codes in all control units" />
+        </components>
+      </hmiState>
+    </hmiStates>
+  </pluginApp>
+</pluginApps>

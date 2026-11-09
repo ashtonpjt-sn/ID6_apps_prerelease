@@ -1,0 +1,134 @@
+"""Generate RHMI resources for the text-driven apps: Warm-Up, Performance Timer
+and Fault Scanner. Their workers write the text; these screens only place it.
+
+Model and action IDs here must match src/warm_up.c, src/perf_timer.c,
+src/fault_scan.c and the plugin sources (tests/test_drive_apps.py checks them).
+"""
+from io import BytesIO
+from pathlib import Path
+from xml.etree import ElementTree as ET
+from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
+
+from PIL import Image, ImageDraw
+
+from make_drive_apps import ROOT, button, entry, position, save
+
+WARM_BAR_BASE, WARM_BAR_WARM, WARM_BAR_STEPS = 56100, 56140, 32
+BAR_WIDTH, BAR_HEIGHT = 1104, 24
+APPS = (  # name, title, weight, connector
+    ("WarmUp", "Warm-Up", 211, 105),
+    ("PerfTimer", "Performance Timer", 212, 106),
+    ("FaultScan", "Fault Scanner", 213, 107),
+)
+
+
+def label(content, models, component, model, x, y, w=1176, h=55):
+    ET.SubElement(models, "raDataModel", id=str(model), modelType="Richtext")
+    position(ET.SubElement(content, "label", id=str(component), model=str(model)), x, y, w, h)
+
+
+def image(content, models, component, model, asset, x, y, w, h):
+    ET.SubElement(models, "imageIdModel", id=str(model), imageId=str(asset))
+    item = ET.SubElement(content, "image", id=str(component), model=str(model))
+    position(item, x, y, w, h)
+    props = item.find("properties")
+    ET.SubElement(props, "property", id="2", value="false")
+    ET.SubElement(props, "property", id="3", value="true")
+
+
+def png(img):
+    data = BytesIO()
+    img.save(data, format="PNG", optimize=True)
+    return data.getvalue()
+
+
+def write_images(name, images):
+    with ZipFile(ROOT / f"{name}_ALL_Images.zip", "w", ZIP_DEFLATED) as archive:
+        for identifier, img in images:
+            archive.writestr(ZipInfo(f"{identifier}.png"), png(img), ZIP_DEFLATED)
+
+
+def warm_bars():
+    for base, fill in ((WARM_BAR_BASE, "#ffb03a"), (WARM_BAR_WARM, "#6cdb93")):
+        for step in range(WARM_BAR_STEPS + 1):
+            img = Image.new("RGBA", (BAR_WIDTH, BAR_HEIGHT))
+            draw = ImageDraw.Draw(img)
+            draw.rounded_rectangle((0, 0, BAR_WIDTH - 1, BAR_HEIGHT - 1), radius=8, fill="#263342")
+            if step:
+                width = max(16, round(BAR_WIDTH * step / WARM_BAR_STEPS))
+                draw.rounded_rectangle((0, 0, width - 1, BAR_HEIGHT - 1), radius=8, fill=fill)
+            yield base + step, img
+
+
+def warm_up():
+    name, title, weight, connector = APPS[0]
+    doc, _, models, _, page = entry(name, title, weight, connector, 100, images=True)
+    content = ET.SubElement(page, "components")
+    label(content, models, 152, 52, 52, 22)
+    image(content, models, 200, 60, WARM_BAR_BASE, 88, 92, BAR_WIDTH, BAR_HEIGHT)
+    for i, model in enumerate((50, 51, 53, 54, 55)):
+        label(content, models, 160 + i, model, 52, 136 + 60 * i)
+    save(doc, f"{name}.xml")
+    write_images(name, warm_bars())
+
+
+def transparent():
+    yield 56200, Image.new("RGBA", (1, 1))
+
+
+def perf_timer():
+    name, title, weight, connector = APPS[1]
+    doc, actions, models, _, page = entry(name, title, weight, connector, 100, images=True)
+    ET.SubElement(actions, "raAction", id="41")
+    options = ET.SubElement(page, "optionComponents")
+    button(options, 30, 41, "Reset best results")
+    content = ET.SubElement(page, "components")
+    label(content, models, 150, 50, 52, 22)
+    for i in range(5):
+        label(content, models, 151 + i, 51 + i, 52, 92 + 60 * i)
+    label(content, models, 156, 56, 52, 398, h=50)
+    save(doc, f"{name}.xml")
+    write_images(name, transparent())
+
+
+def fault_scan():
+    name, title, weight, connector = APPS[2]
+    doc, actions, models, states, page = entry(name, title, weight, connector, 100, images=True)
+    ET.SubElement(actions, "hmiAction", id="40", target="101")
+    for identifier in (41, 42, 43, 44, 45):
+        ET.SubElement(actions, "raAction", id=str(identifier))
+    options = ET.SubElement(page, "optionComponents")
+    button(options, 30, 41, "Scan all modules")
+    button(options, 31, 42, "Next page")
+    button(options, 32, 43, "Previous page")
+    button(options, 33, 40, "Clear fault codes")
+    content = ET.SubElement(page, "components")
+    label(content, models, 150, 50, 52, 16, h=50)
+    for i in range(8):
+        label(content, models, 151 + i, 51 + i, 52, 70 + 48 * i, h=46)
+    clear = ET.SubElement(states, "hmiState", id="101", parentId="100", text="Clear fault codes")
+    items = ET.SubElement(clear, "components")
+    for model in (60, 61):
+        ET.SubElement(models, "raDataModel", id=str(model), modelType="Richtext")
+    ET.SubElement(items, "label", id="300", model="60")
+    ET.SubElement(items, "label", id="301", model="61")
+    button(items, 302, 44, "Clear engine (DME) codes")
+    button(items, 303, 45, "Clear codes in all control units")
+    save(doc, f"{name}.xml")
+    write_images(name, transparent())
+
+
+def constants():
+    (ROOT.parent / "src" / "app_assets.h").write_text(
+        "// Generated by tools/make_text_apps.py.\n"
+        "#ifndef APP_ASSETS_H\n#define APP_ASSETS_H\n"
+        f"enum {{ WU_BAR_BASE = {WARM_BAR_BASE}, WU_BAR_WARM = {WARM_BAR_WARM}, "
+        f"WU_BAR_STEPS = {WARM_BAR_STEPS} }};\n"
+        "#endif\n")
+
+
+if __name__ == "__main__":
+    warm_up()
+    perf_timer()
+    fault_scan()
+    constants()
