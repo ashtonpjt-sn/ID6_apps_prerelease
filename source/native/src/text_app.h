@@ -34,6 +34,11 @@ class TextApp : public bmw::PluginApp {
     char line_[512];
     const char* worker_;
     unsigned poll_key_, first_, last_;
+    // Continuous workers are restarted after an unexpected exit.
+    bool keep_;
+    const char* const* keep_args_;
+    unsigned keep_status_;
+    uint64_t restart_at_;
 
     void postPoll(unsigned delay) {
         if (polling_) return;
@@ -99,6 +104,7 @@ class TextApp : public bmw::PluginApp {
             if (n<0 && (errno==EINTR || errno==EAGAIN || errno==EWOULDBLOCK)) return;
             if (n<=0) {
                 closePipe();
+                if (keep_) restart_at_=bd_mono_ms()+2000;
                 static_cast<Derived*>(this)->workerFinished();
                 return;
             }
@@ -125,7 +131,8 @@ protected:
             const char* worker,unsigned pollKey,unsigned firstModel,unsigned lastModel)
         : PluginApp(d,name,maj,min,version,cfg,res),child_(-1),pipe_(-1),generation_(0),
           polling_(false),discarding_(false),used_(0),worker_(worker),poll_key_(pollKey),
-          first_(firstModel),last_(lastModel) {
+          first_(firstModel),last_(lastModel),keep_(false),keep_args_(0),keep_status_(0),
+          restart_at_(0) {
         for (unsigned i=0;i<4;++i) stale_[i]=-1;
     }
 
@@ -136,9 +143,28 @@ protected:
         reap();
         return child_>0 || pipe_>=0;
     }
-    // Start the worker with "--host GATEWAY" followed by up to 6 extra arguments.
-    // Returns false (after showing why on statusModel) if it could not start.
+    // Start a one-shot worker with "--host GATEWAY" followed by up to 6 extra
+    // arguments (a null-terminated array). Returns false, after showing why on
+    // statusModel, if it could not start.
     bool startWorker(const char* const* extra,unsigned statusModel) {
+        keep_=false;
+        return spawnWorker(extra,statusModel);
+    }
+    // Start a worker that runs until stopWorker() and is restarted two seconds
+    // after an unexpected exit, then with restartArgs. Both arrays must outlive it.
+    bool runContinuously(const char* const* extra,const char* const* restartArgs,
+                         unsigned statusModel) {
+        bool started=spawnWorker(extra,statusModel);
+        keep_=true;
+        keep_args_=restartArgs;
+        keep_status_=statusModel;
+        if (!started) {
+            restart_at_=bd_mono_ms()+2000;
+            postPoll(2000u);
+        }
+        return started;
+    }
+    bool spawnWorker(const char* const* extra,unsigned statusModel) {
         stopWorker();
         char host[16];
         if (!installed_gateway(worker_,host)) {
@@ -165,6 +191,7 @@ protected:
         return true;
     }
     void stopWorker() {
+        keep_=false;
         closePipe();
         reap();
         retire();
@@ -172,6 +199,7 @@ protected:
     }
     // For onInit/onFinalize: also invalidates queued polls.
     void shutdownWorker() {
+        keep_=false;
         ++generation_;
         polling_=false;
         closePipe();
@@ -193,8 +221,14 @@ public:
         polling_=false;
         readPipe();
         reap();
+        if (keep_ && pipe_<0 && child_<=0 && bd_mono_ms()>=restart_at_) {
+            const char* const* args=keep_args_;
+            unsigned status=keep_status_;
+            runContinuously(args,args,status);
+        }
         if (pipe_>=0) postPoll(80u);
         else if (child_>0 || staleLeft()) postPoll(250u);
+        else if (keep_) postPoll(500u);
         return true;
     }
 };

@@ -33,6 +33,8 @@
       <imageIdModel id="70" imageId="55901" />
       <imageIdModel id="71" imageId="55901" />
       <imageIdModel id="72" imageId="55900" />
+      <imageIdModel id="75" imageId="55930" />
+      <imageIdModel id="74" imageId="55900" />
     </models>
     <hmiStates>
       <hmiState id="100" text="ShiftDeck">
@@ -193,6 +195,26 @@
           <image id="218" model="72">
             <properties>
               <property id="20" value="187" />
+              <property id="21" value="139" />
+              <property id="9" value="67" />
+              <property id="10" value="109" />
+              <property id="2" value="false" />
+              <property id="3" value="true" />
+            </properties>
+          </image>
+          <image id="221" model="75">
+            <properties>
+              <property id="20" value="330" />
+              <property id="21" value="108" />
+              <property id="9" value="120" />
+              <property id="10" value="179" />
+              <property id="2" value="false" />
+              <property id="3" value="true" />
+            </properties>
+          </image>
+          <image id="220" model="74">
+            <properties>
+              <property id="20" value="330" />
               <property id="21" value="139" />
               <property id="9" value="67" />
               <property id="10" value="109" />

@@ -9,6 +9,7 @@
     <actions>
       <hmiAction id="10" target="100" />
       <hmiAction id="31" target="104" />
+      <hmiAction id="32" target="105" />
       <raAction id="40" />
       <raAction id="41" />
       <raAction id="42" />
@@ -37,11 +38,20 @@
       <raDataModel id="57" modelType="Richtext" />
       <imageIdModel id="67" imageId="55000" />
       <raDataModel id="110" modelType="Richtext" />
+      <raDataModel id="120" modelType="Richtext" />
+      <raDataModel id="121" modelType="Richtext" />
+      <raDataModel id="122" modelType="Richtext" />
+      <raDataModel id="123" modelType="Richtext" />
+      <raDataModel id="124" modelType="Richtext" />
+      <raDataModel id="125" modelType="Richtext" />
+      <raDataModel id="126" modelType="Richtext" />
+      <raDataModel id="127" modelType="Richtext" />
     </models>
     <hmiStates>
       <hmiState id="100" text="BoostDeck">
         <optionComponents>
           <button id="33" action="31" text="Gauge color" />
+          <button id="34" action="32" text="More vitals" />
         </optionComponents>
         <components>
           <image id="200" model="60">
@@ -202,6 +212,74 @@
           <button id="396" action="46" text="Cyan" />
           <button id="397" action="47" text="Red" />
           <button id="398" action="48" text="Multicolor" />
+        </components>
+      </hmiState>
+      <hmiState id="105" parentId="100" text="More vitals">
+        <components>
+          <label id="420" model="120">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="22" />
+              <property id="9" value="1176" />
+              <property id="10" value="50" />
+            </properties>
+          </label>
+          <label id="421" model="121">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="74" />
+              <property id="9" value="1176" />
+              <property id="10" value="50" />
+            </properties>
+          </label>
+          <label id="422" model="122">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="126" />
+              <property id="9" value="1176" />
+              <property id="10" value="50" />
+            </properties>
+          </label>
+          <label id="423" model="123">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="178" />
+              <property id="9" value="1176" />
+              <property id="10" value="50" />
+            </properties>
+          </label>
+          <label id="424" model="124">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="230" />
+              <property id="9" value="1176" />
+              <property id="10" value="50" />
+            </properties>
+          </label>
+          <label id="425" model="125">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="282" />
+              <property id="9" value="1176" />
+              <property id="10" value="50" />
+            </properties>
+          </label>
+          <label id="426" model="126">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="334" />
+              <property id="9" value="1176" />
+              <property id="10" value="50" />
+            </properties>
+          </label>
+          <label id="427" model="127">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="386" />
+              <property id="9" value="1176" />
+              <property id="10" value="50" />
+            </properties>
+          </label>
         </components>
       </hmiState>
     </hmiStates>

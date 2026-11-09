@@ -1,5 +1,6 @@
 #include "plugin_factory.h"
 #include "diagnostic_worker.h"
+#include "text_app.h" // ID6_PLUGIN_ROOT
 #include "drive_frame.h"
 #include "gauge_core.h"
 #include "shift_assets.h"
@@ -10,7 +11,9 @@
 
 namespace {
 const unsigned kShiftPoll=0x53484654u;
-const char kShiftWorker[]="/var/opt/hmi/data/ID5/Plugins/ShiftDeck/shift-deck-qnx";
+const char kShiftWorker[]=ID6_PLUGIN_ROOT "/ShiftDeck/shift-deck-qnx";
+// The learned gear calibration survives restarts beside the worker.
+const char kGearCalibration[]=ID6_PLUGIN_ROOT "/ShiftDeck/gear-calibration.txt";
 }
 
 class ShiftDeck : public bmw::PluginApp {
@@ -22,7 +25,7 @@ class ShiftDeck : public bmw::PluginApp {
     uint64_t retry_at_;
     drive_frame frame_;
     unsigned bar_, lights_;
-    int rpm_,kph_;
+    int rpm_,kph_,gear_;
     bool shift_;
 
     void label(unsigned id,const char* value) { updateModel(id,bmw::BasicString<char>(value)); }
@@ -89,6 +92,12 @@ class ShiftDeck : public bmw::PluginApp {
             digits(70u,3u,text,kDigitBase,false);
             kph_=kph;
         }
+        int gear=live && frame_.gear>=1 && frame_.gear<=8 ? frame_.gear : 0;
+        if (gear!=gear_) {
+            const char digit[2]={gear ? static_cast<char>('0'+gear) : '-',0};
+            digits(74u,1u,digit,kDigitBase,false);
+            gear_=gear;
+        }
         if (shift!=shift_) {
             updateModel(57u,bmw::ImageID(shift ? kShiftOn : kShiftOff));
             shift_=shift;
@@ -123,7 +132,7 @@ public:
               bmw::RHMIInterfaceVersion version,const bmw::Bundle& cfg,const bmw::Bundle& res)
         : PluginApp(d,name,maj,min,version,cfg,res),socket_(-1),child_(-1),generation_(0),
           visible_(false),target_(kDefaultTarget),retry_at_(0),bar_(0),lights_(0),
-          rpm_(-2),kph_(-2),shift_(false) {
+          rpm_(-2),kph_(-2),gear_(-1),shift_(false) {
         memset(&frame_,0,sizeof frame_);
     }
     virtual ~ShiftDeck() { shutdown(); }
@@ -134,6 +143,7 @@ public:
         bar_=0;
         lights_=static_cast<unsigned>(-1);
         rpm_=kph_=-2;
+        gear_=-1;
         shift_=false;
         socket_=socket(AF_INET,SOCK_DGRAM,0);
         if (socket_>=0) {
@@ -179,7 +189,7 @@ public:
         if (visible_ && child_<=0 && now>=retry_at_) {
             char host[16];
             if (installed_gateway(kShiftWorker,host)) {
-                const char* args[]={kShiftWorker,"--host",host,0};
+                const char* args[]={kShiftWorker,"--host",host,"--calibration",kGearCalibration,0};
                 child_=launch(args,-1);
             }
             retry_at_=now+1000;
@@ -190,7 +200,7 @@ public:
             if (n<=0) break;
             if (n==sizeof next && visible_ && next.sampled_ms>=frame_.sampled_ms &&
                 next.sampled_ms<=now && next.rpm>=-1 && next.rpm<=16383 &&
-                next.kph>=-1 && next.kph<=255) frame_=next;
+                next.kph>=-1 && next.kph<=255 && next.gear>=0 && next.gear<=8) frame_=next;
         }
         draw(now);
         postPoll();

@@ -12,6 +12,7 @@ DIGIT_BASE, DIGIT_WARN = 55890, 55902
 SHIFT_OFF, SHIFT_ON = 55914, 55915
 SPEED_LEGEND, RPM_LEGEND, SCALE, LOWER = range(55916, 55920)
 MARK_BASE = 55920
+GEAR_LEGEND = 55930
 TARGETS = (5800, 6000, 6250, 6500, 6700)
 DEFAULT_INDEX = TARGETS.index(6500)
 WHITE, DIM, BLUE, RED = "#f0f4fb", "#90a4ba", "#7bd2ff", "#ff4548"
@@ -104,6 +105,11 @@ def bitmaps():
     text(d,(2,3),"RPM",25,DIM,"lt")
     yield RPM_LEGEND,image
 
+    image,d=art((120,179))
+    text(d,(2,3),"GEAR",25,DIM,"lt")
+    d.line((2,177,90,177),fill=LINE,width=2)
+    yield GEAR_LEGEND,image
+
     image,d=art((BAR_WIDTH,51))
     for i in range(17):
         x=BAR_START+round(i*BAR_PITCH)
@@ -129,7 +135,7 @@ def save_assets(out, constants):
         + "".join(f"static const unsigned {key} = {value}u;\n" for key,value in (
             ("kBarBase",BAR_BASE),("kBarWarn",BAR_WARN),("kLightBase",LIGHT_BASE),
             ("kTargetBase",TARGET_BASE),("kDigitBase",DIGIT_BASE),("kDigitWarn",DIGIT_WARN),
-            ("kMarkBase",MARK_BASE),
+            ("kMarkBase",MARK_BASE),("kGearLegend",GEAR_LEGEND),
             ("kShiftOff",SHIFT_OFF),("kShiftOn",SHIFT_ON),("kDefaultTarget",DEFAULT_INDEX)))
         + "static const unsigned kShiftTargets[] = {"
         + ", ".join(map(str,TARGETS)) + "};\n"

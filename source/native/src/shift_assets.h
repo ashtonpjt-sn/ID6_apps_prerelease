@@ -6,6 +6,7 @@ static const unsigned kTargetBase = 55880u;
 static const unsigned kDigitBase = 55890u;
 static const unsigned kDigitWarn = 55902u;
 static const unsigned kMarkBase = 55920u;
+static const unsigned kGearLegend = 55930u;
 static const unsigned kShiftOff = 55914u;
 static const unsigned kShiftOn = 55915u;
 static const unsigned kDefaultTarget = 3u;

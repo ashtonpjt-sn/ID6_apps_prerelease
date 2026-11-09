@@ -83,6 +83,9 @@ def shift_app():
     graphic(68,art.MARK_BASE+art.DEFAULT_INDEX,52,278,art.BAR_WIDTH,9)
     for i in range(3):
         graphic(70+i,art.DIGIT_BASE+(10 if i==2 else 11),53+i*67,139,67,109)
+    # Gear estimate between speed and RPM ("-" until learned).
+    graphic(75,art.GEAR_LEGEND,330,108,120,179)
+    graphic(74,art.DIGIT_BASE+10,330,139,67,109)
 
     settings=ET.SubElement(states,"hmiState",id="101",parentId="100",text="Shift light setting")
     items=ET.SubElement(settings,"components")

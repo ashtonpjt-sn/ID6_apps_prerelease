@@ -55,7 +55,7 @@ def main():
     entry = ET.SubElement(app,'entryButton',id='1',action='10')
     ET.SubElement(ET.SubElement(entry,'properties'),'property',id='23',value='2')
     actions = ET.SubElement(app,'actions')
-    for identifier, target in ((10,100),(31,104)):
+    for identifier, target in ((10,100),(31,104),(32,105)):
         ET.SubElement(actions,'hmiAction',id=str(identifier),target=str(target))
     for identifier in range(40,40+len(THEMES)):
         ET.SubElement(actions,'raAction',id=str(identifier))
@@ -64,6 +64,7 @@ def main():
     gauges = ET.SubElement(states,'hmiState',id='100',text='BoostDeck')
     options = ET.SubElement(gauges,'optionComponents')
     button(options,33,31,'Gauge color')
+    button(options,34,32,'More vitals')
     content = ET.SubElement(gauges,'components')
     for i in range(len(BARS)):
         ET.SubElement(models,'raDataModel',id=str(50+i),modelType='Richtext')
@@ -79,6 +80,12 @@ def main():
     label(content,389,110)
     for i,name in enumerate(THEMES):
         button(content,390+i,40+i,name)
+    # "More vitals": text lines written by boostdeck-collector-qnx --vitals.
+    vitals = ET.SubElement(states,'hmiState',id='105',parentId='100',text='More vitals')
+    content = ET.SubElement(vitals,'components')
+    for i in range(8):
+        ET.SubElement(models,'raDataModel',id=str(120+i),modelType='Richtext')
+        add_props(label(content,420+i,120+i),52,22+52*i,1176,50)
     ET.indent(root,space='  ')
     ET.ElementTree(root).write(ROOT/'plugin/BoostDeck.xml',encoding='utf-8',xml_declaration=True)
     scales = [f'    {{{lo}, {hi}, "{name}", "{unit}"}}' for name,unit,lo,hi in BARS]
