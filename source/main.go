@@ -118,7 +118,7 @@ func main() {
 						checked.Result += " Staging or backups are at " + backup + "."
 					}
 				} else {
-					checked.Result = "Installed and verified all three apps. While parked, hold the volume/power knob until the iDrive screen goes dark (about 30 seconds), then release. After iDrive starts again, open My Vehicle.\nBackup location: " + backup
+					checked.Result = "Installed and verified all apps. While parked, hold the volume/power knob until the iDrive screen goes dark (about 30 seconds), then release. After iDrive starts again, open My Vehicle.\nBackup location: " + backup
 				}
 				checked.Ready = false
 			}

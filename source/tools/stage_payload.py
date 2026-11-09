@@ -13,6 +13,9 @@ APPS = (
     ("BoostDeck", "boostdeck-collector-qnx", "100"),
     ("ShiftDeck", "shift-deck-qnx", "104"),
     ("MhdMaps", "mhd-maps-qnx", "103"),
+    ("WarmUp", "warm-up-qnx", "105"),
+    ("PerfTimer", "perf-timer-qnx", "106"),
+    ("FaultScan", "fault-scan-qnx", "107"),
 )
 
 
@@ -59,7 +62,7 @@ def main():
         for source, destination in copies:
             destination.parent.mkdir(exist_ok=True)
             copyfile(source, destination)
-    print("Verified all three app payloads and the ARM helper.")
+    print(f"Verified all {len(APPS)} app payloads and the ARM helper.")
 
 
 if __name__ == "__main__":

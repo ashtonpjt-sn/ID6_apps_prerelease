@@ -17,6 +17,18 @@
   </tr>
 </table>
 
+## New in this fork
+
+Three more apps under **My Vehicle**, plus two upgrades. None has been tested on a car yet.
+
+- **Warm-Up**: oil and coolant temperature, a rev limit that rises as the engine warms, and time to working temperature
+- **Performance Timer**: automatic 0–60 mph, ¼ mile, 60–100 mph, 60–130 mph and 60–0 mph braking, with best results kept
+- **Fault Scanner**: reads fault codes from every control unit. It can also clear them, after two presses and only once the DME confirms the car is stopped
+- **BoostDeck → OPTIONS → More vitals**: oil temperature, low-pressure fuel, battery, fuel trims, ethanol, engine load and misfires per cylinder
+- **ShiftDeck**: a gear indicator that learns your car's ratios
+
+Details and safeguards: [source/docs/NEW_APPS.md](source/docs/NEW_APPS.md)
+
 ## Coming Soon (In Development)
 
 <table>

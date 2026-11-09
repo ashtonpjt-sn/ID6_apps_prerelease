@@ -237,7 +237,7 @@ func inspect(r remoteRunner, in vehicleInput, gatewayCheck func(string, string) 
 		result.Result = "The expected writable ID5 Plugins folder is unavailable."
 		return result
 	}
-	result.Result = "Frameworks matched. BoostDeck, ShiftDeck and MHD Maps are ready for a parked preview."
+	result.Result = "Frameworks matched. BoostDeck, ShiftDeck, MHD Maps, Warm-Up, Performance Timer and Fault Scanner are ready for a parked preview."
 	result.Ready = true
 	return result
 }
@@ -250,6 +250,9 @@ var apps = []plugin{
 	{"BoostDeck", "boostdeck-collector-qnx", "100"},
 	{"ShiftDeck", "shift-deck-qnx", "104"},
 	{"MhdMaps", "mhd-maps-qnx", "103"},
+	{"WarmUp", "warm-up-qnx", "105"},
+	{"PerfTimer", "perf-timer-qnx", "106"},
+	{"FaultScan", "fault-scan-qnx", "107"},
 }
 
 type manifest struct {

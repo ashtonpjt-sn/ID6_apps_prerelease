@@ -24,13 +24,23 @@ c -Isrc -O2 -fPIC -c src/gauge_core.c -o out/core.o
 cxx -Isrc -Isdk -O2 -fno-strict-aliasing -fno-exceptions -fPIC -shared src/plugin.cpp out/core.o \
     "$frameworks/libAppFramework.A.so" "$frameworks/libCoreFramework.A.so" -Lout -lm -lsocket \
     -Wl,--allow-shlib-undefined -Wl,-soname,libBoostDeck.so -o out/libBoostDeck.so
-c -Isrc -O2 src/collector.c src/gauge_core.c src/hsfz.c -Lout -lm -lsocket -o out/boostdeck-collector-qnx
+workers='src/gauge_core.c src/hsfz.c src/drive_core.c'
+c -Isrc -O2 src/collector.c src/vitals.c $workers -Lout -lm -lsocket -o out/boostdeck-collector-qnx
 cxx -Isrc -Isdk -O2 -fno-exceptions -fPIC -shared src/mhd_maps.cpp \
     "$frameworks/libAppFramework.A.so" "$frameworks/libCoreFramework.A.so" -Lout \
     -Wl,--allow-shlib-undefined -Wl,-soname,libMhdMaps.so -o out/libMhdMaps.so
 cxx -Isrc -Isdk -O2 -fno-exceptions -fPIC -shared src/shift_deck.cpp out/core.o \
     "$frameworks/libAppFramework.A.so" "$frameworks/libCoreFramework.A.so" -Lout -lm -lsocket \
     -Wl,--allow-shlib-undefined -Wl,-soname,libShiftDeck.so -o out/libShiftDeck.so
-c -Isrc -O2 -DMHD_MAPS_ONLY src/collector.c src/gauge_core.c src/hsfz.c -Lout -lm -lsocket -o out/mhd-maps-qnx
-c -Isrc -O2 -DSHIFT_DECK_ONLY src/collector.c src/gauge_core.c src/hsfz.c -Lout -lm -lsocket -o out/shift-deck-qnx
+c -Isrc -O2 -DMHD_MAPS_ONLY src/collector.c $workers -Lout -lm -lsocket -o out/mhd-maps-qnx
+c -Isrc -O2 -DSHIFT_DECK_ONLY src/collector.c $workers -Lout -lm -lsocket -o out/shift-deck-qnx
+# Text-driven apps: a thin plugin over text_app.h plus a worker per app.
+for app in WarmUp:warm_up PerfTimer:perf_timer FaultScan:fault_scan; do
+    name=${app%:*}
+    source=${app#*:}
+    cxx -Isrc -Isdk -O2 -fno-strict-aliasing -fno-exceptions -fPIC -shared "src/${source}_app.cpp" out/core.o \
+        "$frameworks/libAppFramework.A.so" "$frameworks/libCoreFramework.A.so" -Lout -lm -lsocket \
+        -Wl,--allow-shlib-undefined -Wl,-soname,"lib$name.so" -o "out/lib$name.so"
+    c -Isrc -O2 "src/$source.c" $workers -Lout -lm -lsocket -o "out/$(echo "$source" | tr _ -)-qnx"
+done
 c -O2 -static fileops.c -o out/gaugedeck-fileops
