@@ -31,6 +31,8 @@ python3 tools/probe_signals.py --local 169.254.10.2 --gateway 169.254.10.3 --ecu
 python3 tools/probe_signals.py --local 169.254.10.2 --gateway 169.254.10.3 --ecu 18 22da12
 ```
 
+To survey a whole engine description at once, pass a catalog instead of explicit requests: `--catalog tools/b58_catalog.json` sends each listed read once, with the same read-only checks and spacing, and decodes positive replies for a first sanity check; `--only 224a49,22f470` narrows it. The B58 catalog is built from idrive7-apps by `tools/import_dme_catalog.py` and lists candidates, not verified values.
+
 On Windows use `py -3` if Python is installed with the launcher. The probe allows only explicit `01` and `22` reads, targets DME or EGS, and bounds and spaces its requests. Keep address, request, complete response, test conditions, and the independent reading for each candidate.
 
 | Observation | Next check |

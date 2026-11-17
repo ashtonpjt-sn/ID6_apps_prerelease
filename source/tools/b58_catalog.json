@@ -1,0 +1,2631 @@
+{
+ "source": "cauliflowermossgrape/idrive7-apps: apps/live_data/builtin/DME8FF_R (SGBD DME8FF_R rev 55.000) and apps/car_vitals/app.json. MIT, see third-party/idrive7-apps-LICENSE. Candidates, not values verified on a car.",
+ "enums": {
+  "T_IKCTL_FLGKNKDETN_SIGDOP": {
+   "0": "----",
+   "1": "TRUE"
+  }
+ },
+ "requests": [
+  {
+   "ecu": "12",
+   "request": "224035",
+   "group": "DME8FF_R",
+   "job": "KQE",
+   "name": "Fuel quality measurements",
+   "fields": [
+    {
+     "name": "STAT_QB1_WERT",
+     "type": "u16",
+     "at": 0,
+     "label": "Refuellings, quality range 1 (low)"
+    },
+    {
+     "name": "STAT_QB2_WERT",
+     "type": "u16",
+     "at": 2,
+     "label": "Refuellings, quality range 2 (medium)"
+    },
+    {
+     "name": "STAT_QB3_WERT",
+     "type": "u16",
+     "at": 4,
+     "label": "Refuellings, quality range 3 (high)"
+    },
+    {
+     "name": "STAT_KM1_WERT",
+     "type": "u16",
+     "at": 6,
+     "factor": 8.0,
+     "unit": "km",
+     "label": "Refuelling 1, mileage"
+    },
+    {
+     "name": "STAT_KM1QB_WERT",
+     "type": "u8",
+     "at": 8,
+     "label": "Refuelling 1, quality range"
+    },
+    {
+     "name": "STAT_KM2_WERT",
+     "type": "u16",
+     "at": 9,
+     "factor": 8.0,
+     "unit": "km",
+     "label": "Refuelling 2, mileage"
+    },
+    {
+     "name": "STAT_KM2QB_WERT",
+     "type": "u8",
+     "at": 11,
+     "label": "Refuelling 2, quality range"
+    },
+    {
+     "name": "STAT_KM3_WERT",
+     "type": "u16",
+     "at": 12,
+     "factor": 8.0,
+     "unit": "km",
+     "label": "Refuelling 3, mileage"
+    },
+    {
+     "name": "STAT_KM3QB_WERT",
+     "type": "u8",
+     "at": 14,
+     "label": "Refuelling 3, quality range"
+    },
+    {
+     "name": "STAT_KM4_WERT",
+     "type": "u16",
+     "at": 15,
+     "factor": 8.0,
+     "unit": "km",
+     "label": "Refuelling 4, mileage"
+    },
+    {
+     "name": "STAT_KM4QB_WERT",
+     "type": "u8",
+     "at": 17,
+     "label": "Refuelling 4, quality range"
+    },
+    {
+     "name": "STAT_KM5_WERT",
+     "type": "u16",
+     "at": 18,
+     "factor": 8.0,
+     "unit": "km",
+     "label": "Refuelling 5, mileage"
+    },
+    {
+     "name": "STAT_KM5QB_WERT",
+     "type": "u8",
+     "at": 20,
+     "label": "Refuelling 5, quality range"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22411A",
+   "group": "DME8FF_R",
+   "job": "OELZUSTAND",
+   "name": "Oil wear function",
+   "fields": [
+    {
+     "name": "STAT_VERF_BETRIEBSH_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.001953125,
+     "label": "Oil availability from operating hours"
+    },
+    {
+     "name": "STAT_VERF_KRAFTSTOFF_WERT",
+     "type": "u16",
+     "at": 2,
+     "factor": 0.001953125,
+     "label": "Oil availability from fuel used"
+    },
+    {
+     "name": "STAT_OEL_BETRIEBSH_WERT",
+     "type": "u32",
+     "at": 4,
+     "unit": "s",
+     "label": "Oil operating hours"
+    },
+    {
+     "name": "STAT_PEILSTAB_FEHLER_WERT",
+     "type": "u8",
+     "at": 8,
+     "label": "Dipstick fault"
+    },
+    {
+     "name": "STAT_RESTWEG_PEILSTAB_WERT",
+     "type": "s16",
+     "at": 9,
+     "factor": 10.0,
+     "unit": "km",
+     "label": "Oil remaining distance (dipstick)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224163",
+   "group": "DME8FF_R",
+   "job": "ZUENDKERZENHISTORIE",
+   "name": "Spark plug wear model, current values",
+   "fields": [
+    {
+     "name": "STAT_ZKW_AKT_VERSCHLEISS_NORM_WERT",
+     "type": "u32",
+     "at": 0,
+     "factor": 9.31e-10,
+     "label": "Spark plug wear, current set (accumulated, normalised)"
+    },
+    {
+     "name": "STAT_ZWK_AKT_RESTLAUFSTRECKE_WERT",
+     "type": "s16",
+     "at": 4,
+     "factor": 100.0,
+     "unit": "km",
+     "label": "Spark plugs: estimated remaining distance"
+    },
+    {
+     "name": "STAT_ZKW_AKT_LAUFSTRECKE_WERT",
+     "type": "u32",
+     "at": 6,
+     "unit": "km",
+     "label": "Spark plug distance"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224201",
+   "group": "DME8FF_R",
+   "job": "IPUMG",
+   "name": "Ambient pressure",
+   "fields": [
+    {
+     "name": "STAT_UMGEBUNGSDRUCK_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.0390625,
+     "unit": "hPa",
+     "label": "Ambient pressure"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224205",
+   "group": "DME8FF_R",
+   "job": "IPLAD",
+   "name": "Pressure before throttle (0...5120 hPa)",
+   "fields": [
+    {
+     "name": "STAT_LADEDRUCK_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.078125,
+     "unit": "hPa",
+     "label": "Pressure before throttle (0...5120 hPa)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224206",
+   "group": "DME8FF_R",
+   "job": "MASSENSTROM_DK_BANK1",
+   "name": "Air mass flow through throttle, bank 1",
+   "fields": [
+    {
+     "name": "STAT_MASSENSTROM_DK_BANK1_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.03125,
+     "unit": "kg/h",
+     "label": "Air mass flow through throttle, bank 1"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224300",
+   "group": "DME8FF_R",
+   "job": "ITKUM",
+   "name": "Engine temperature",
+   "fields": [
+    {
+     "name": "STAT_KUEHLMITTELTEMPERATUR_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "offset": -273.14,
+     "unit": "°C",
+     "label": "Engine temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224402",
+   "group": "DME8FF_R",
+   "job": "ITOEL",
+   "name": "Oil temperature after filter",
+   "fields": [
+    {
+     "name": "STAT_OELTEMPERATUR_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.75,
+     "offset": -48.0,
+     "unit": "°C",
+     "label": "Oil temperature after filter"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224404",
+   "group": "DME8FF_R",
+   "job": "OELKILOMETER",
+   "name": "Distance on this oil",
+   "fields": [
+    {
+     "name": "STAT_OELKILOMETER_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 10.0,
+     "unit": "km",
+     "label": "Distance on this oil"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224408",
+   "group": "DME8FF_R",
+   "job": "TEMP_OEL_UNFILT",
+   "name": "Oil temperature (unfiltered)",
+   "fields": [
+    {
+     "name": "STAT_TEMP_OEL_UNFILT_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "offset": -273.14,
+     "unit": "°C",
+     "label": "Oil temperature (unfiltered)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224409",
+   "group": "DME8FF_R",
+   "job": "NIVE_OEL_UNFILT",
+   "name": "Oil level (unfiltered) in mm",
+   "fields": [
+    {
+     "name": "STAT_NIVE_OEL_UNFILT_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.004,
+     "unit": "mm",
+     "label": "Oil level (unfiltered) in mm"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224425",
+   "group": "DME8FF_R",
+   "job": "TEMP_OEL_SUMPF",
+   "name": "Oil temperature in the sump",
+   "fields": [
+    {
+     "name": "STAT_TEMP_OEL_SUMPF_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°C",
+     "label": "Oil temperature in the sump"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22442F",
+   "group": "DME8FF_R",
+   "job": "ABK_SCHNITTSTELLE_OELNIV",
+   "name": "Engine oil level above minimum (cl)",
+   "fields": [
+    {
+     "name": "STAT_ABK_SCHNITTSTELLE_OELNIV_WERT",
+     "type": "u8",
+     "at": 0,
+     "unit": "cl",
+     "label": "Engine oil level above minimum (cl)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224436",
+   "group": "DME8FF_R",
+   "job": "I_DRUCK_OEL_IST_ABS",
+   "name": "Oil pressure actual (absolute)",
+   "fields": [
+    {
+     "name": "STAT_I_DRUCK_OEL_IST_ABS_WERT",
+     "type": "u16",
+     "at": 0,
+     "unit": "hPa",
+     "label": "Oil pressure actual (absolute)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224520",
+   "group": "DME8FF_R",
+   "job": "MOTORLEISTUNG_EFFEKTIV",
+   "name": "Effective engine power",
+   "fields": [
+    {
+     "name": "STAT_MOTORLEISTUNG_EFFEKTIV_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.015258789062,
+     "label": "Effective engine power"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224521",
+   "group": "DME8FF_R",
+   "job": "MASSENSTROM_KRAFTSTOFF",
+   "name": "Fuel mass flow",
+   "fields": [
+    {
+     "name": "STAT_MASSENSTROM_KRAFTSTOFF_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "kg/h",
+     "label": "Fuel mass flow"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22452A",
+   "group": "DME8FF_R",
+   "job": "S_NWSA_SPREIZUNG",
+   "name": "Exhaust VANOS spread target",
+   "fields": [
+    {
+     "name": "STAT_S_NWSA_SPREIZUNG_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°CA",
+     "label": "Exhaust VANOS spread target"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22452B",
+   "group": "DME8FF_R",
+   "job": "S_NWSE_SPREIZUNG",
+   "name": "Intake VANOS spread target",
+   "fields": [
+    {
+     "name": "STAT_S_NWSE_SPREIZUNG_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°CA",
+     "label": "Intake VANOS spread target"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22452C",
+   "group": "DME8FF_R",
+   "job": "I_NWSA_SPREIZUNG",
+   "name": "Exhaust VANOS spread actual",
+   "fields": [
+    {
+     "name": "STAT_I_NWSA_SPREIZUNG_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°CA",
+     "label": "Exhaust VANOS spread actual"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22452E",
+   "group": "DME8FF_R",
+   "job": "I_NWSE_SPREIZUNG",
+   "name": "Intake VANOS spread actual",
+   "fields": [
+    {
+     "name": "STAT_I_NWSE_SPREIZUNG_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°CA",
+     "label": "Intake VANOS spread actual"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224536",
+   "group": "DME8FF_R",
+   "job": "LADEDRUCK_REGELDIFFERENZ_BANKSPEZ",
+   "name": "Boost pressure control deviation, bank 1",
+   "fields": [
+    {
+     "name": "STAT_LADEDRUCK_REGELDIFFERENZ_BANKSPEZ_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.125,
+     "unit": "hPa",
+     "label": "Boost pressure control deviation, bank 1"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224600",
+   "group": "DME8FF_R",
+   "job": "IWDKL",
+   "name": "Throttle angle above lower stop",
+   "fields": [
+    {
+     "name": "STAT_DROSSELKLAPPENWINKEL_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.0078125,
+     "unit": "%",
+     "label": "Throttle angle above lower stop"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224602",
+   "group": "DME8FF_R",
+   "job": "VVT_EINLVENTHUB_EXZENTER_ADAP_PRAEDIK",
+   "name": "Intake valve lift (Valvetronic, with adaptation and prediction)",
+   "fields": [
+    {
+     "name": "STAT_VVT_EINLVENTHUB_EXZENTER_ADAP_PRAEDIK_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.001,
+     "unit": "mm",
+     "label": "Intake valve lift (Valvetronic, with adaptation and prediction)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224603",
+   "group": "DME8FF_R",
+   "job": "S_EINLASSVENTILHUB_FILT",
+   "name": "Intake valve lift target (filtered)",
+   "fields": [
+    {
+     "name": "STAT_S_EINLASSVENTILHUB_FILT_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.001,
+     "unit": "mm",
+     "label": "Intake valve lift target (filtered)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224604",
+   "group": "DME8FF_R",
+   "job": "IIGEN",
+   "name": "Generator output current",
+   "fields": [
+    {
+     "name": "STAT_GENERATOR_STROM_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.125,
+     "unit": "A",
+     "label": "Generator output current"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224650",
+   "group": "DME8FF_R",
+   "job": "TEMP_GETRIEBE",
+   "name": "Gearbox temperature",
+   "fields": [
+    {
+     "name": "STAT_TEMP_GETRIEBE_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.75,
+     "offset": -48.0,
+     "unit": "°C",
+     "label": "Gearbox temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224807",
+   "group": "DME8FF_R",
+   "job": "INMOT",
+   "name": "Engine speed",
+   "fields": [
+    {
+     "name": "STAT_MOTORDREHZAHL_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.5,
+     "unit": "rpm",
+     "label": "Engine speed"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22480B",
+   "group": "DME8FF_R",
+   "job": "IFPWG",
+   "name": "Accelerator pedal angle (normalised)",
+   "fields": [
+    {
+     "name": "STAT_FAHRERWUNSCH_PEDAL_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.01220703,
+     "unit": "%",
+     "label": "Accelerator pedal angle (normalised)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A2D",
+   "group": "DME8FF_R",
+   "job": "DRUCK_ABS_SAUGROHR",
+   "name": "Intake manifold absolute pressure (measured)",
+   "fields": [
+    {
+     "name": "STAT_DRUCK_ABS_SAUGROHR_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.078125,
+     "unit": "hPa",
+     "label": "Intake manifold absolute pressure (measured)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A30",
+   "group": "DME8FF_R",
+   "job": "ILUZ1",
+   "name": "Rough running, cylinder 1",
+   "fields": [
+    {
+     "name": "STAT_LAUFUNRUHE_ZYL1_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.0625,
+     "unit": "rad/s²",
+     "label": "Rough running, cylinder 1"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A31",
+   "group": "DME8FF_R",
+   "job": "ILUZ2",
+   "name": "Rough running, cylinder 2",
+   "fields": [
+    {
+     "name": "STAT_LAUFUNRUHE_ZYL2_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.0625,
+     "unit": "rad/s²",
+     "label": "Rough running, cylinder 2"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A32",
+   "group": "DME8FF_R",
+   "job": "ILUZ3",
+   "name": "Rough running, cylinder 3",
+   "fields": [
+    {
+     "name": "STAT_LAUFUNRUHE_ZYL3_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.0625,
+     "unit": "rad/s²",
+     "label": "Rough running, cylinder 3"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A33",
+   "group": "DME8FF_R",
+   "job": "ILUZ4",
+   "name": "Rough running, cylinder 4",
+   "fields": [
+    {
+     "name": "STAT_LAUFUNRUHE_ZYL4_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.0625,
+     "unit": "rad/s²",
+     "label": "Rough running, cylinder 4"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A34",
+   "group": "DME8FF_R",
+   "job": "ILUZ5",
+   "name": "Rough running, cylinder 5",
+   "fields": [
+    {
+     "name": "STAT_LAUFUNRUHE_ZYL5_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.0625,
+     "unit": "rad/s²",
+     "label": "Rough running, cylinder 5"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A35",
+   "group": "DME8FF_R",
+   "job": "ILUZ6",
+   "name": "Rough running, cylinder 6",
+   "fields": [
+    {
+     "name": "STAT_LAUFUNRUHE_ZYL6_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.0625,
+     "unit": "rad/s²",
+     "label": "Rough running, cylinder 6"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A36",
+   "group": "DME8FF_R",
+   "job": "ISKLO",
+   "name": "Knock detected",
+   "fields": [
+    {
+     "name": "STAT_STATUS_KLOPFEN",
+     "type": "u8",
+     "at": 0,
+     "enum": "T_IKCTL_FLGKNKDETN_SIGDOP",
+     "label": "Knock detected"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A49",
+   "group": "DME8FF_R",
+   "job": "IZWZ1",
+   "name": "Ignition angle, cylinder 1",
+   "fields": [
+    {
+     "name": "STAT_ZUENDWINKEL_ZYL1_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°CA",
+     "label": "Ignition angle, cylinder 1"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A4A",
+   "group": "DME8FF_R",
+   "job": "IZWZ2",
+   "name": "Ignition angle, cylinder 2",
+   "fields": [
+    {
+     "name": "STAT_ZUENDWINKEL_ZYL2_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°CA",
+     "label": "Ignition angle, cylinder 2"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A4C",
+   "group": "DME8FF_R",
+   "job": "IZWZ3",
+   "name": "Ignition angle, cylinder 3",
+   "fields": [
+    {
+     "name": "STAT_ZUENDWINKEL_ZYL3_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°CA",
+     "label": "Ignition angle, cylinder 3"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A4D",
+   "group": "DME8FF_R",
+   "job": "IZWZ4",
+   "name": "Ignition angle, cylinder 4",
+   "fields": [
+    {
+     "name": "STAT_ZUENDWINKEL_ZYL4_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°CA",
+     "label": "Ignition angle, cylinder 4"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A4E",
+   "group": "DME8FF_R",
+   "job": "IZWZ5",
+   "name": "Ignition angle, cylinder 5",
+   "fields": [
+    {
+     "name": "STAT_ZUENDWINKEL_ZYL5_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°CA",
+     "label": "Ignition angle, cylinder 5"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A4F",
+   "group": "DME8FF_R",
+   "job": "IZWZ6",
+   "name": "Ignition angle, cylinder 6",
+   "fields": [
+    {
+     "name": "STAT_ZUENDWINKEL_ZYL6_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°CA",
+     "label": "Ignition angle, cylinder 6"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224A9D",
+   "group": "DME8FF_R",
+   "job": "KORR_MULT_GEMISCHADAP",
+   "name": "Mixture adaptation multiplicative correction",
+   "fields": [
+    {
+     "name": "STAT_KORR_MULT_GEMISCHADAP_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 3.0517578e-05,
+     "label": "Mixture adaptation multiplicative correction"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224AAA",
+   "group": "DME8FF_R",
+   "job": "OELDRUCK_PWM_ANST",
+   "name": "Oil pressure PWM duty cycle",
+   "fields": [
+    {
+     "name": "STAT_OELDRUCK_PWM_ANST_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.01220703,
+     "unit": "%",
+     "label": "Oil pressure PWM duty cycle"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224AAB",
+   "group": "DME8FF_R",
+   "job": "LDS_TV_ENDSTUFE",
+   "name": "Boost actuator output duty cycle",
+   "fields": [
+    {
+     "name": "STAT_LDS_TV_ENDSTUFE_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.001525878906,
+     "unit": "%",
+     "label": "Boost actuator output duty cycle"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224AB0",
+   "group": "DME8FF_R",
+   "job": "S_LADEDRUCK",
+   "name": "Boost pressure target / boostTarget",
+   "fields": [
+    {
+     "name": "STAT_S_LADEDRUCK_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.0390625,
+     "unit": "hPa",
+     "label": "Boost pressure target"
+    },
+    {
+     "name": "boostTarget",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.00390625,
+     "offset": 0,
+     "label": "BMW boost pressure setpoint (absolute), hPa = raw * 10 / 256",
+     "min": 20,
+     "max": 400
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224AB1",
+   "group": "DME8FF_R",
+   "job": "IVKMH",
+   "name": "Vehicle speed",
+   "fields": [
+    {
+     "name": "STAT_GESCHWINDIGKEIT_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.01,
+     "unit": "km/h",
+     "label": "Vehicle speed"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224ABC",
+   "group": "DME8FF_R",
+   "job": "IMLUF",
+   "name": "Air mass flow (filtered)",
+   "fields": [
+    {
+     "name": "STAT_LUFTMASSE_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "kg/h",
+     "label": "Air mass flow (filtered)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224AD5",
+   "group": "DME8FF_R",
+   "job": "TEMP_KRAFTSTOFF",
+   "name": "Fuel temperature",
+   "fields": [
+    {
+     "name": "STAT_TEMP_KRAFTSTOFF_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.75,
+     "offset": -48.0,
+     "unit": "°C",
+     "label": "Fuel temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224B23",
+   "group": "DME8FF_R",
+   "job": "ZAEHLER_AUSSETZERK_ZYL1",
+   "name": "Misfire counter, cylinder 1",
+   "fields": [
+    {
+     "name": "STAT_ZAEHLER_AUSSETZERK_ZYL1_WERT",
+     "type": "u16",
+     "at": 0,
+     "label": "Misfire counter, cylinder 1"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224B24",
+   "group": "DME8FF_R",
+   "job": "ZAEHLER_AUSSETZERK_ZYL2",
+   "name": "Misfire counter, cylinder 2",
+   "fields": [
+    {
+     "name": "STAT_ZAEHLER_AUSSETZERK_ZYL2_WERT",
+     "type": "u16",
+     "at": 0,
+     "label": "Misfire counter, cylinder 2"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224B25",
+   "group": "DME8FF_R",
+   "job": "ZAEHLER_AUSSETZERK_ZYL3",
+   "name": "Misfire counter, cylinder 3",
+   "fields": [
+    {
+     "name": "STAT_ZAEHLER_AUSSETZERK_ZYL3_WERT",
+     "type": "u16",
+     "at": 0,
+     "label": "Misfire counter, cylinder 3"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224B30",
+   "group": "DME8FF_R",
+   "job": "ZAEHLER_AUSSETZERK_ZYL4",
+   "name": "Misfire counter, cylinder 4",
+   "fields": [
+    {
+     "name": "STAT_ZAEHLER_AUSSETZERK_ZYL4_WERT",
+     "type": "u16",
+     "at": 0,
+     "label": "Misfire counter, cylinder 4"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224B31",
+   "group": "DME8FF_R",
+   "job": "ZAEHLER_AUSSETZERK_ZYL5",
+   "name": "Misfire counter, cylinder 5",
+   "fields": [
+    {
+     "name": "STAT_ZAEHLER_AUSSETZERK_ZYL5_WERT",
+     "type": "u16",
+     "at": 0,
+     "label": "Misfire counter, cylinder 5"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "224B32",
+   "group": "DME8FF_R",
+   "job": "ZAEHLER_AUSSETZERK_ZYL6",
+   "name": "Misfire counter, cylinder 6",
+   "fields": [
+    {
+     "name": "STAT_ZAEHLER_AUSSETZERK_ZYL6_WERT",
+     "type": "u16",
+     "at": 0,
+     "label": "Misfire counter, cylinder 6"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225433",
+   "group": "DME8FF_R",
+   "job": "O2_SPFK_KAT1_BANK1",
+   "name": "Catalyst 1 oxygen storage capacity, bank 1",
+   "fields": [
+    {
+     "name": "STAT_O2_SPFK_KAT1_BANK1_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "mg",
+     "label": "Catalyst 1 oxygen storage capacity, bank 1"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225444",
+   "group": "DME8FF_R",
+   "job": "RUSSMASSE_OPF_B1",
+   "name": "Soot mass in particulate filter, bank 1",
+   "fields": [
+    {
+     "name": "STAT_RUSSMASSE_OPF_B1_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.01,
+     "unit": "g",
+     "label": "Soot mass in particulate filter, bank 1"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225463",
+   "group": "DME8FF_R",
+   "job": "KNDS_SENS_ROH_KS_DRUCK",
+   "name": "Low pressure fuel sensor: fuel pressure raw value",
+   "fields": [
+    {
+     "name": "STAT_KNDS_SENS_ROH_KS_DRUCK_WERT",
+     "type": "s16",
+     "at": 0,
+     "unit": "hPa",
+     "label": "Low pressure fuel sensor: fuel pressure raw value"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22546E",
+   "group": "DME8FF_R",
+   "job": "MW_QSTAT_ADAP_ZYL_ALL",
+   "name": "Injector flow adaptation, mean of all cylinders",
+   "fields": [
+    {
+     "name": "STAT_MW_QSTAT_ADAP_ZYL_ALL_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 3.052e-05,
+     "label": "Injector flow adaptation, mean of all cylinders"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225489",
+   "group": "DME8FF_R",
+   "job": "RESTLAUFSTRECKE_KERZENSATZ",
+   "name": "Spark plugs: estimated remaining distance",
+   "fields": [
+    {
+     "name": "STAT_RESTLAUFSTRECKE_KERZENSATZ_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 100.0,
+     "unit": "km",
+     "label": "Spark plugs: estimated remaining distance"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22550D",
+   "group": "DME8FF_R",
+   "job": "PROZENT_ALK_KRST",
+   "name": "Alcohol in the fuel",
+   "fields": [
+    {
+     "name": "STAT_PROZENT_ALK_KRST_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.39215686,
+     "unit": "%",
+     "label": "Alcohol in the fuel"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225511",
+   "group": "DME8FF_R",
+   "job": "LUFTMASSENSTROM_VERBR",
+   "name": "Air mass flow taking part in combustion",
+   "fields": [
+    {
+     "name": "STAT_LUFTMASSENSTROM_VERBR_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "kg/h",
+     "label": "Air mass flow taking part in combustion"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225512",
+   "group": "DME8FF_R",
+   "job": "TEMP_UMG",
+   "name": "Outside temperature",
+   "fields": [
+    {
+     "name": "STAT_TEMP_UMG_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.5,
+     "offset": -40.0,
+     "unit": "°C",
+     "label": "Outside temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22554A",
+   "group": "DME8FF_R",
+   "job": "ZW_AEND_ADAP_KR",
+   "name": "Ignition angle change from knock control adaptation",
+   "fields": [
+    {
+     "name": "STAT_ZW_AEND_ADAP_KR_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "°C",
+     "label": "Ignition angle change from knock control adaptation"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22554C",
+   "group": "DME8FF_R",
+   "job": "MITTELW_ZYLIND_ZWSPAET_KR_HALBQUANT",
+   "name": "Mean ignition retard by knock control (all cylinders)",
+   "fields": [
+    {
+     "name": "STAT_MITTELW_ZYLIND_ZWSPAET_KR_HALBQUANT_WERT",
+     "type": "s8",
+     "at": 0,
+     "factor": 0.375,
+     "unit": "°CA",
+     "label": "Mean ignition retard by knock control (all cylinders)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22558B",
+   "group": "DME8FF_R",
+   "job": "OPF_ADAPTIERTE_ASCHEMASSE",
+   "name": "Ash mass in particulate filter (adapted)",
+   "fields": [
+    {
+     "name": "STAT_OPF_ADAPTIERTE_ASCHEMASSE_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.001,
+     "label": "Ash mass in particulate filter (adapted)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22558C",
+   "group": "DME8FF_R",
+   "job": "OPF_ADAPTIERTE_GES_LADUNG",
+   "name": "Particulate filter total load (adapted)",
+   "fields": [
+    {
+     "name": "STAT_OPF_ADAPTIERTE_GES_LADUNG_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.001,
+     "label": "Particulate filter total load (adapted)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2255B4",
+   "group": "DME8FF_R",
+   "job": "QSTAT_KORR_FAK_BEGR_ZYL_1",
+   "name": "Injector flow correction (limited), cylinder 1",
+   "fields": [
+    {
+     "name": "STAT_QSTAT_KORR_FAK_BEGR_ZYL_1_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 3.052e-05,
+     "label": "Injector flow correction (limited), cylinder 1"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2255B5",
+   "group": "DME8FF_R",
+   "job": "QSTAT_KORR_FAK_BEGR_ZYL_2",
+   "name": "Injector flow correction (limited), cylinder 2",
+   "fields": [
+    {
+     "name": "STAT_QSTAT_KORR_FAK_BEGR_ZYL_2_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 3.052e-05,
+     "label": "Injector flow correction (limited), cylinder 2"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2255B6",
+   "group": "DME8FF_R",
+   "job": "QSTAT_KORR_FAK_BEGR_ZYL_3",
+   "name": "Injector flow correction (limited), cylinder 3",
+   "fields": [
+    {
+     "name": "STAT_QSTAT_KORR_FAK_BEGR_ZYL_3_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 3.052e-05,
+     "label": "Injector flow correction (limited), cylinder 3"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2255B7",
+   "group": "DME8FF_R",
+   "job": "QSTAT_KORR_FAK_BEGR_ZYL_4",
+   "name": "Injector flow correction (limited), cylinder 4",
+   "fields": [
+    {
+     "name": "STAT_QSTAT_KORR_FAK_BEGR_ZYL_4_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 3.052e-05,
+     "label": "Injector flow correction (limited), cylinder 4"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2255B8",
+   "group": "DME8FF_R",
+   "job": "QSTAT_KORR_FAK_BEGR_ZYL_5",
+   "name": "Injector flow correction (limited), cylinder 5",
+   "fields": [
+    {
+     "name": "STAT_QSTAT_KORR_FAK_BEGR_ZYL_5_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 3.052e-05,
+     "label": "Injector flow correction (limited), cylinder 5"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2255B9",
+   "group": "DME8FF_R",
+   "job": "QSTAT_KORR_FAK_BEGR_ZYL_6",
+   "name": "Injector flow correction (limited), cylinder 6",
+   "fields": [
+    {
+     "name": "STAT_QSTAT_KORR_FAK_BEGR_ZYL_6_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 3.052e-05,
+     "label": "Injector flow correction (limited), cylinder 6"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225640",
+   "group": "DME8FF_R",
+   "job": "LAMBDA_SONDE_IST",
+   "name": "Lambda actual (from sensor)",
+   "fields": [
+    {
+     "name": "STAT_LAMBDA_SONDE_IST_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.00024414,
+     "label": "Lambda actual (from sensor)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22564F",
+   "group": "DME8FF_R",
+   "job": "GANG_INTERN",
+   "name": "Current gear, internal (incl. neutral and reverse)",
+   "fields": [
+    {
+     "name": "STAT_GANG_INTERN_WERT",
+     "type": "u8",
+     "at": 0,
+     "label": "Current gear, internal (incl. neutral and reverse)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225656",
+   "group": "DME8FF_R",
+   "job": "VOLUM_STROM_KRAFTST_MLS_LOKAL",
+   "name": "Fuel volume flow (ml/s)",
+   "fields": [
+    {
+     "name": "STAT_VOLUM_STROM_KRAFTST_MLS_LOKAL_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.00119209,
+     "unit": "ml/s",
+     "label": "Fuel volume flow (ml/s)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225658",
+   "group": "DME8FF_R",
+   "job": "I_DRUCK_RAIL_ABS_FILT_NEU",
+   "name": "Rail pressure actual (filtered, absolute)",
+   "fields": [
+    {
+     "name": "STAT_I_DRUCK_RAIL_ABS_FILT_NEU_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.002,
+     "unit": "MPa",
+     "label": "Rail pressure actual (filtered, absolute)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2256BA",
+   "group": "DME8FF_R",
+   "job": "MASS_STROM_EINLASSVENT_OHNE_EISYKORR",
+   "name": "Mass flow at the intake valve (without correction factor)",
+   "fields": [
+    {
+     "name": "STAT_MASS_STROM_EINLASSVENT_OHNE_EISYKORR_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.03125,
+     "unit": "kg/h",
+     "label": "Mass flow at the intake valve (without correction factor)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2256C1",
+   "group": "DME8FF_R",
+   "job": "S_RAILDRUCKREGELUNG_NEU",
+   "name": "Rail pressure control target",
+   "fields": [
+    {
+     "name": "STAT_S_RAILDRUCKREGELUNG_NEU_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.002,
+     "unit": "MPa",
+     "label": "Rail pressure control target"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2256F0",
+   "group": "DME8FF_R",
+   "job": "SPEICHER_SOC",
+   "name": "Battery state of charge now",
+   "fields": [
+    {
+     "name": "STAT_SPEICHER_SOC_WERT",
+     "type": "s8",
+     "at": 0,
+     "unit": "%",
+     "label": "Battery state of charge now"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225717",
+   "group": "DME8FF_R",
+   "job": "ISTMOMENT_OHNE_ANTIRUCKEINGR",
+   "name": "Engine torque without anti-jerk (clutch torque)",
+   "fields": [
+    {
+     "name": "STAT_ISTMOMENT_OHNE_ANTIRUCKEINGR_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "Nm",
+     "label": "Engine torque without anti-jerk (clutch torque)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225774",
+   "group": "DME8FF_R",
+   "job": "ANTEIL_RUSS_OPF",
+   "name": "Soot mass in the particulate filter",
+   "fields": [
+    {
+     "name": "STAT_ANTEIL_RUSS_OPF_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.001,
+     "unit": "g",
+     "label": "Soot mass in the particulate filter"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225776",
+   "group": "DME8FF_R",
+   "job": "FAK_KRAFTSTOFFQUALITAET_ADAPT",
+   "name": "Adapted fuel quality factor (0 = RON 98, 1 = RON 91)",
+   "fields": [
+    {
+     "name": "STAT_FAK_KRAFTSTOFFQUALITAET_ADAPT_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.00390625,
+     "label": "Adapted fuel quality factor (0 = RON 98, 1 = RON 91)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22579B",
+   "group": "DME8FF_R",
+   "job": "ABGTEMP_KRUEM_AMOT_BANK1",
+   "name": "Particulate filter temperature, bank 1",
+   "fields": [
+    {
+     "name": "STAT_ABGTEMP_KRUEM_AMOT_BANK1_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "offset": -273.14,
+     "unit": "°C",
+     "label": "Particulate filter temperature, bank 1"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2257C1",
+   "group": "DME8FF_R",
+   "job": "AVG_P_T_THR_SNSR",
+   "name": "Pressure before throttle (0...5120 hPa)",
+   "fields": [
+    {
+     "name": "STAT_AVG_P_T_THR_SNSR_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.078125,
+     "unit": "hPa",
+     "label": "Pressure before throttle (0...5120 hPa)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2257E3",
+   "group": "DME8FF_R",
+   "job": "TIME_FROM_LST_INST",
+   "name": "Time since last refuelling",
+   "fields": [
+    {
+     "name": "STAT_TIME_FROM_LST_INST_WERT",
+     "type": "u16",
+     "at": 0,
+     "unit": "min",
+     "label": "Time since last refuelling"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225805",
+   "group": "DME8FF_R",
+   "job": "ITMOT",
+   "name": "Engine temperature",
+   "fields": [
+    {
+     "name": "STAT_MOTORTEMPERATUR_LINEAR_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "offset": -273.14,
+     "unit": "°C",
+     "label": "Engine temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22580F",
+   "group": "DME8FF_R",
+   "job": "ITANS",
+   "name": "Intake air temperature",
+   "fields": [
+    {
+     "name": "STAT_ANSAUGLUFTTEMPERATUR_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.75,
+     "offset": -48.0,
+     "unit": "°C",
+     "label": "Intake air temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225811",
+   "group": "DME8FF_R",
+   "job": "NIVE_MOTOROEL_REL_UEBER_MIN",
+   "name": "Engine oil level above minimum (cl)",
+   "fields": [
+    {
+     "name": "STAT_NIVE_MOTOROEL_REL_UEBER_MIN_WERT",
+     "type": "u8",
+     "at": 0,
+     "unit": "cl",
+     "label": "Engine oil level above minimum (cl)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225812",
+   "group": "DME8FF_R",
+   "job": "ILMKG",
+   "name": "Air mass meter flow (16 bit)",
+   "fields": [
+    {
+     "name": "STAT_LUFTMASSE_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "kg/h",
+     "label": "Air mass meter flow (16 bit)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225813",
+   "group": "DME8FF_R",
+   "job": "ILREL",
+   "name": "Relative air charge / loadActual",
+   "fields": [
+    {
+     "name": "STAT_LASTWERT_RELATIV_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.75,
+     "unit": "%",
+     "label": "Relative air charge"
+    },
+    {
+     "name": "loadActual",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.75,
+     "offset": 0,
+     "label": "BMW actual relative air charge, % = raw * 0.75",
+     "min": 0,
+     "max": 191.25
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225814",
+   "group": "DME8FF_R",
+   "job": "FAHRPEDWINKEL_NORM",
+   "name": "Accelerator pedal angle (normalised)",
+   "fields": [
+    {
+     "name": "STAT_FAHRPEDWINKEL_NORM_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.01220703,
+     "unit": "%",
+     "label": "Accelerator pedal angle (normalised)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225816",
+   "group": "DME8FF_R",
+   "job": "S_LAMBDA_SOLLWERT",
+   "name": "Lambda target at the lambda sensor",
+   "fields": [
+    {
+     "name": "STAT_S_LAMBDA_SOLLWERT_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.000244140625,
+     "label": "Lambda target at the lambda sensor"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225817",
+   "group": "DME8FF_R",
+   "job": "ITUMG",
+   "name": "Outside temperature",
+   "fields": [
+    {
+     "name": "STAT_UMGEBUNGSTEMPERATUR_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "offset": -273.14,
+     "unit": "°C",
+     "label": "Outside temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225821",
+   "group": "DME8FF_R",
+   "job": "TEMP_SG",
+   "name": "Engine unit temperature",
+   "fields": [
+    {
+     "name": "STAT_TEMP_SG_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.75,
+     "offset": -48.0,
+     "unit": "°C",
+     "label": "Engine unit temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225822",
+   "group": "DME8FF_R",
+   "job": "TEMP_OEL",
+   "name": "Oil temperature",
+   "fields": [
+    {
+     "name": "STAT_TEMP_OEL_WERT",
+     "type": "u8",
+     "at": 0,
+     "offset": -60.0,
+     "unit": "°C",
+     "label": "Oil temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22582F",
+   "group": "DME8FF_R",
+   "job": "TEMP_ABGAS_NACH_KAT_MODELL",
+   "name": "Exhaust temperature after catalyst (model)",
+   "fields": [
+    {
+     "name": "STAT_TEMP_ABGAS_NACH_KAT_MODELL_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "offset": -273.14,
+     "unit": "°C",
+     "label": "Exhaust temperature after catalyst (model)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225837",
+   "group": "DME8FF_R",
+   "job": "S_RAILDRUCKREGELUNG",
+   "name": "Rail pressure control target",
+   "fields": [
+    {
+     "name": "STAT_S_RAILDRUCKREGELUNG_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.0005,
+     "unit": "MPa",
+     "label": "Rail pressure control target"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22583B",
+   "group": "DME8FF_R",
+   "job": "IKTFS",
+   "name": "Fuel tank level",
+   "fields": [
+    {
+     "name": "STAT_KRAFTSTOFFTANK_FUELLSTAND_WERT",
+     "type": "u8",
+     "at": 0,
+     "unit": "l",
+     "label": "Fuel tank level"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22583D",
+   "group": "DME8FF_R",
+   "job": "BETRIEBSSTUNDENZAEHLER",
+   "name": "Operating hours counter",
+   "fields": [
+    {
+     "name": "STAT_BETRIEBSSTUNDENZAEHLER_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 6.0,
+     "unit": "min",
+     "label": "Operating hours counter"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225852",
+   "group": "DME8FF_R",
+   "job": "BATT_STROM",
+   "name": "Battery sensor (IBS) battery current",
+   "fields": [
+    {
+     "name": "STAT_BATT_STROM_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.02,
+     "offset": -200.0,
+     "unit": "A",
+     "label": "Battery sensor (IBS) battery current"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225853",
+   "group": "DME8FF_R",
+   "job": "BATT_SPANNUNG",
+   "name": "Battery sensor (IBS) battery voltage",
+   "fields": [
+    {
+     "name": "STAT_BATT_SPANNUNG_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.001,
+     "unit": "V",
+     "label": "Battery sensor (IBS) battery voltage"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225854",
+   "group": "DME8FF_R",
+   "job": "BATT_TEMP",
+   "name": "Battery sensor (IBS) battery temperature",
+   "fields": [
+    {
+     "name": "STAT_BATT_TEMP_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.75,
+     "offset": -48.0,
+     "unit": "°C",
+     "label": "Battery sensor (IBS) battery temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225858",
+   "group": "DME8FF_R",
+   "job": "DK_WINK_BEZ_UMA",
+   "name": "Throttle angle above lower stop",
+   "fields": [
+    {
+     "name": "STAT_DK_WINK_BEZ_UMA_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.0078125,
+     "unit": "%",
+     "label": "Throttle angle above lower stop"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22586F",
+   "group": "DME8FF_R",
+   "job": "OELDRUCK",
+   "name": "Oil pressure",
+   "fields": [
+    {
+     "name": "STAT_OELDRUCK_WERT",
+     "type": "s16",
+     "at": 0,
+     "unit": "hPa",
+     "label": "Oil pressure"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225881",
+   "group": "DME8FF_R",
+   "job": "SBEGA",
+   "name": "Actual gear",
+   "fields": [
+    {
+     "name": "STAT_BERECHNETER_GANG_WERT",
+     "type": "u8",
+     "at": 0,
+     "label": "Actual gear"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225889",
+   "group": "DME8FF_R",
+   "job": "ILAG1",
+   "name": "Lambda actual",
+   "fields": [
+    {
+     "name": "STAT_LAMBDA_ISTWERT_GRUPPE1_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.000244140625,
+     "label": "Lambda actual"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225890",
+   "group": "DME8FF_R",
+   "job": "TEMP_MOTOR_KUEHLERAUSG_KUEHLM",
+   "name": "Radiator outlet coolant temperature",
+   "fields": [
+    {
+     "name": "STAT_TEMP_MOTOR_KUEHLERAUSG_KUEHLM_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.75,
+     "offset": -48.0,
+     "unit": "°C",
+     "label": "Radiator outlet coolant temperature"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225891",
+   "group": "DME8FF_R",
+   "job": "IMOKU",
+   "name": "Clutch engine torque actual",
+   "fields": [
+    {
+     "name": "STAT_MOMENTANFORDERUNG_KUPPLUNG_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.5,
+     "unit": "Nm",
+     "label": "Clutch engine torque actual"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225896",
+   "group": "DME8FF_R",
+   "job": "TEMP_NACH_KAT_MODELL",
+   "name": "Exhaust temperature after main catalyst (model)",
+   "fields": [
+    {
+     "name": "STAT_TEMP_NACH_KAT_MODELL_WERT",
+     "type": "s16",
+     "at": 0,
+     "factor": 0.1,
+     "offset": -273.14,
+     "unit": "°C",
+     "label": "Exhaust temperature after main catalyst (model)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2258EF",
+   "group": "DME8FF_R",
+   "job": "I_DRUCK_RAIL_ABS_FILT",
+   "name": "Rail pressure actual (filtered, absolute)",
+   "fields": [
+    {
+     "name": "STAT_I_DRUCK_RAIL_ABS_FILT_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.0005,
+     "unit": "MPa",
+     "label": "Rail pressure actual (filtered, absolute)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2258F3",
+   "group": "DME8FF_R",
+   "job": "ROH_NIEDERDRUCK_UNFILT",
+   "name": "Low fuel pressure raw value (unfiltered)",
+   "fields": [
+    {
+     "name": "STAT_ROH_NIEDERDRUCK_UNFILT_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.1,
+     "unit": "kPa",
+     "label": "Low fuel pressure raw value (unfiltered)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225927",
+   "group": "DME8FF_R",
+   "job": "I_EWG_POS",
+   "name": "Electric wastegate actual position (0 = closed, 100 = open)",
+   "fields": [
+    {
+     "name": "STAT_I_EWG_POS_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.390625,
+     "unit": "%",
+     "label": "Electric wastegate actual position (0 = closed, 100 = open)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22593A",
+   "group": "DME8FF_R",
+   "job": "OEL_MAS_GES_KRAFTST_ETH",
+   "name": "Petrol + alcohol in the oil (total mass)",
+   "fields": [
+    {
+     "name": "STAT_OEL_MAS_GES_KRAFTST_ETH_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.02133333,
+     "unit": "g",
+     "label": "Petrol + alcohol in the oil (total mass)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "225949",
+   "group": "DME8FF_R",
+   "job": "FUELLST_TANKH_L",
+   "name": "Fuel level, left tank half",
+   "fields": [
+    {
+     "name": "STAT_FUELLST_TANKH_L_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.5,
+     "unit": "l",
+     "label": "Fuel level, left tank half"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22594A",
+   "group": "DME8FF_R",
+   "job": "FUELLST_TANKH_R",
+   "name": "Fuel level, right tank half",
+   "fields": [
+    {
+     "name": "STAT_FUELLST_TANKH_R_WERT",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.5,
+     "unit": "l",
+     "label": "Fuel level, right tank half"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2259AA",
+   "group": "DME8FF_R",
+   "job": "VALSOH",
+   "name": "State of health",
+   "fields": [
+    {
+     "name": "STAT_VALSOH_WERT",
+     "type": "s8",
+     "at": 0,
+     "unit": "%",
+     "label": "State of health"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2259D4",
+   "group": "DME8FF_R",
+   "job": "ANSAUGLUFTTEMP_VOR_DK",
+   "name": "Intake air temperature before throttle (measured)",
+   "fields": [
+    {
+     "name": "STAT_ANSAUGLUFTTEMP_VOR_DK_WERT",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.0234375,
+     "offset": -273.15,
+     "unit": "°C",
+     "label": "Intake air temperature before throttle (measured)"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "2259FA",
+   "group": "DME8FF_R",
+   "job": "I_ZUENDWINKEL",
+   "name": "Ignition angle actual",
+   "fields": [
+    {
+     "name": "STAT_I_ZUENDWINKEL_WERT",
+     "type": "s8",
+     "at": 0,
+     "factor": 0.75,
+     "unit": "°CA",
+     "label": "Ignition angle actual"
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F40F",
+   "group": "M Vitals",
+   "name": "iat",
+   "fields": [
+    {
+     "name": "iat",
+     "type": "u8",
+     "at": 0,
+     "factor": 1,
+     "offset": -40,
+     "label": "iat",
+     "min": -40,
+     "max": 150
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F477",
+   "group": "M Vitals",
+   "name": "iat",
+   "fields": [
+    {
+     "name": "iat",
+     "type": "u8",
+     "at": 1,
+     "factor": 1,
+     "offset": -40,
+     "label": "charge air cooler temperature, bank 1 sensor 1",
+     "min": -40,
+     "max": 150
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "010F",
+   "group": "M Vitals",
+   "name": "iat",
+   "fields": [
+    {
+     "name": "iat",
+     "type": "u8",
+     "at": 0,
+     "factor": 1,
+     "offset": -40,
+     "label": "the same PID with OBD service 01, for engine units that refuse F40F with NRC 31",
+     "min": -40,
+     "max": 150
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F423",
+   "group": "M Vitals",
+   "name": "hpfp",
+   "fields": [
+    {
+     "name": "hpfp",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.1,
+     "offset": 0,
+     "label": "fuel rail gauge pressure (direct injection), 10 kPa per bit",
+     "min": 0,
+     "max": 500
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F459",
+   "group": "M Vitals",
+   "name": "hpfp",
+   "fields": [
+    {
+     "name": "hpfp",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.1,
+     "offset": -1,
+     "label": "fuel rail absolute pressure, 10 kPa per bit",
+     "min": 0,
+     "max": 500
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "0123",
+   "group": "M Vitals",
+   "name": "hpfp",
+   "fields": [
+    {
+     "name": "hpfp",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.1,
+     "offset": 0,
+     "label": "OBD service 01 PID 0x23 (same as F423)",
+     "min": 0,
+     "max": 500
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F40A",
+   "group": "M Vitals",
+   "name": "lpfp",
+   "fields": [
+    {
+     "name": "lpfp",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.03,
+     "offset": 0,
+     "label": "fuel pressure (gauge), 3 kPa per bit",
+     "min": 0.5,
+     "max": 8
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F422",
+   "group": "M Vitals",
+   "name": "lpfp",
+   "fields": [
+    {
+     "name": "lpfp",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.00079,
+     "offset": 0,
+     "label": "fuel rail pressure relative to manifold, 0.079 kPa per bit",
+     "min": 0.5,
+     "max": 15
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "010A",
+   "group": "M Vitals",
+   "name": "lpfp",
+   "fields": [
+    {
+     "name": "lpfp",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.03,
+     "offset": 0,
+     "label": "OBD service 01 PID 0x0A (same as F40A)",
+     "min": 0.5,
+     "max": 8
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "0122",
+   "group": "M Vitals",
+   "name": "lpfp",
+   "fields": [
+    {
+     "name": "lpfp",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.00079,
+     "offset": 0,
+     "label": "OBD service 01 PID 0x22 (same as F422)",
+     "min": 0.5,
+     "max": 15
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "015C",
+   "group": "M Vitals",
+   "name": "oil",
+   "fields": [
+    {
+     "name": "oil",
+     "type": "u8",
+     "at": 0,
+     "factor": 1,
+     "offset": -40,
+     "label": "engine oil temperature, OBD service 01 PID 0x5C - only read while the car's own signal (CDS) sends none",
+     "min": -40,
+     "max": 170
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F45C",
+   "group": "M Vitals",
+   "name": "oil",
+   "fields": [
+    {
+     "name": "oil",
+     "type": "u8",
+     "at": 0,
+     "factor": 1,
+     "offset": -40,
+     "label": "oil",
+     "min": -40,
+     "max": 170
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F470",
+   "group": "M Vitals",
+   "name": "boost",
+   "fields": [
+    {
+     "name": "boost",
+     "type": "u16",
+     "at": 3,
+     "factor": 0.03125,
+     "offset": 0,
+     "label": "OBD PID 0x70 boost pressure control: actual boost pressure sensor A (absolute), 1/32 kPa",
+     "min": 20,
+     "max": 600
+    },
+    {
+     "name": "boostTarget",
+     "type": "u16",
+     "at": 1,
+     "factor": 0.03125,
+     "offset": 0,
+     "label": "OBD PID 0x70: commanded boost pressure A (absolute), 1/32 kPa",
+     "min": 20,
+     "max": 600
+    },
+    {
+     "name": "boostActual",
+     "type": "u16",
+     "at": 3,
+     "factor": 0.03125,
+     "offset": 0,
+     "label": "OBD PID 0x70: boost pressure sensor A (absolute), 1/32 kPa",
+     "min": 20,
+     "max": 600
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F487",
+   "group": "M Vitals",
+   "name": "boost",
+   "fields": [
+    {
+     "name": "boost",
+     "type": "u16",
+     "at": 1,
+     "factor": 0.03125,
+     "offset": 0,
+     "label": "OBD PID 0x87 intake manifold absolute pressure sensor A, 1/32 kPa",
+     "min": 20,
+     "max": 600
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F40B",
+   "group": "M Vitals",
+   "name": "boost",
+   "fields": [
+    {
+     "name": "boost",
+     "type": "u8",
+     "at": 0,
+     "factor": 1,
+     "offset": 0,
+     "label": "OBD PID 0x0B intake manifold absolute pressure, kPa (max 255 = 1.5 bar boost)",
+     "min": 20,
+     "max": 255
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "010B",
+   "group": "M Vitals",
+   "name": "boost",
+   "fields": [
+    {
+     "name": "boost",
+     "type": "u8",
+     "at": 0,
+     "factor": 1,
+     "offset": 0,
+     "label": "OBD service 01 PID 0x0B (same as F40B)",
+     "min": 20,
+     "max": 255
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F433",
+   "group": "M Vitals",
+   "name": "baro",
+   "fields": [
+    {
+     "name": "baro",
+     "type": "u8",
+     "at": 0,
+     "factor": 1,
+     "offset": 0,
+     "label": "OBD PID 0x33 barometric pressure, kPa (101.3 when not available)",
+     "min": 50,
+     "max": 115
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "0133",
+   "group": "M Vitals",
+   "name": "baro",
+   "fields": [
+    {
+     "name": "baro",
+     "type": "u8",
+     "at": 0,
+     "factor": 1,
+     "offset": 0,
+     "label": "OBD service 01 PID 0x33 (same as F433)",
+     "min": 50,
+     "max": 115
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "0170",
+   "group": "M Vitals",
+   "name": "boostTarget",
+   "fields": [
+    {
+     "name": "boostTarget",
+     "type": "u16",
+     "at": 1,
+     "factor": 0.03125,
+     "offset": 0,
+     "label": "OBD service 01 PID 0x70 (same as F470)",
+     "min": 20,
+     "max": 600
+    },
+    {
+     "name": "boostActual",
+     "type": "u16",
+     "at": 3,
+     "factor": 0.03125,
+     "offset": 0,
+     "label": "OBD service 01 PID 0x70 (same as F470)",
+     "min": 20,
+     "max": 600
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22580B",
+   "group": "M Vitals",
+   "name": "boostActual",
+   "fields": [
+    {
+     "name": "boostActual",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.00390625,
+     "offset": 0,
+     "label": "BMW boost pressure actual (absolute), hPa = raw * 10 / 256",
+     "min": 20,
+     "max": 400
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22480C",
+   "group": "M Vitals",
+   "name": "loadTarget",
+   "fields": [
+    {
+     "name": "loadTarget",
+     "type": "u16",
+     "at": 0,
+     "factor": 0.0234375,
+     "offset": 0,
+     "label": "BMW requested relative air charge, % = raw * 0.75 / 32",
+     "min": 0,
+     "max": 250
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "010E",
+   "group": "M Vitals",
+   "name": "timing",
+   "fields": [
+    {
+     "name": "timing",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.5,
+     "offset": -64,
+     "label": "OBD service 01 PID 0x0E timing advance, degrees before TDC (cylinder 1)",
+     "min": -64,
+     "max": 63.5
+    }
+   ]
+  },
+  {
+   "ecu": "12",
+   "request": "22F40E",
+   "group": "M Vitals",
+   "name": "timing",
+   "fields": [
+    {
+     "name": "timing",
+     "type": "u8",
+     "at": 0,
+     "factor": 0.5,
+     "offset": -64,
+     "label": "the same PID over UDS 0x22",
+     "min": -64,
+     "max": 63.5
+    }
+   ]
+  },
+  {
+   "ecu": "18",
+   "request": "226000",
+   "group": "M Vitals",
+   "name": "egs",
+   "fields": [
+    {
+     "name": "egs",
+     "type": "u8",
+     "at": 0,
+     "factor": 1,
+     "offset": -40,
+     "label": "ZF 8HP (GSZFBCE) _GETRIEBEOELTEMPERATUR, deg C + 40 (idrive7-apps PR #29, read on a G22)",
+     "min": -40,
+     "max": 160
+    }
+   ]
+  },
+  {
+   "ecu": "18",
+   "request": "22DA12",
+   "group": "M Vitals",
+   "name": "egs",
+   "fields": [
+    {
+     "name": "egs",
+     "type": "u8",
+     "at": 0,
+     "factor": 1,
+     "offset": -48,
+     "label": "gearbox unit (EGS, 0x18) transmission oil temperature, deg C + 48 (from a forum report, not confirmed on a car: only shown once it changes; the replies go to the log, \"raw EGS\")",
+     "min": -40,
+     "max": 160
+    }
+   ]
+  }
+ ]
+}
