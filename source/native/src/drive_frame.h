@@ -9,6 +9,8 @@ struct drive_frame {
     uint64_t sampled_ms;
     int32_t rpm;
     int32_t kph;
+    int32_t gear;     /* 1..8, 0 = unknown */
+    int32_t reserved; /* keeps the frame 24 bytes on every ABI */
 };
 
 #endif

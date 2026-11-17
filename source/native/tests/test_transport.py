@@ -51,6 +51,8 @@ class TransportTest(unittest.TestCase):
                 conn, _ = server.accept()
                 with conn:
                     conn.settimeout(3)
+                    # The fragments below go out at once; with Nagle on, Linux delayed ACKs add ~20 ms each.
+                    conn.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
                     while True:
                         first = conn.recv(1)
                         if not first:

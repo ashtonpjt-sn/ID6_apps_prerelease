@@ -1,6 +1,6 @@
 // Native NBT EVO RA plugin. Models are touched only on the HMI dispatcher.
 // Network diagnostics run in the separate collector process, never in HmiMain3D.
-#include "plugin_factory.h"
+#include "text_app.h"
 #include "gauge_core.h"
 #include "dial_scales.h"
 #include "diagnostic_worker.h"
@@ -32,7 +32,10 @@ const unsigned kDataUpdateMessage = 0x40000003u;
 const unsigned kPollKey = 0x4244504cu; // BDPL, private to this app
 const unsigned kActivePollIntervalMs = 25u;
 const unsigned kIdlePollIntervalMs = 250u;
-const char kCollector[] = "/var/opt/hmi/data/ID5/Plugins/BoostDeck/boostdeck-collector-qnx";
+const char kCollector[] = ID6_PLUGIN_ROOT "/BoostDeck/boostdeck-collector-qnx";
+// The More vitals page (state 105) runs the same worker in its text mode, writing models 120-127.
+const unsigned kVitalsPoll = 0x42445654u; // BDVT
+const char* const kVitalsArgs[] = {"--vitals", 0};
 const unsigned kBarCount = sizeof(kDialScales)/sizeof(kDialScales[0]);
 #ifdef PERF_LAB
 typedef char dial_count_check[kBarCount + 1 == BD_COUNT ? 1 : -1];
@@ -43,7 +46,7 @@ typedef char dial_count_check[kBarCount == BD_COUNT ? 1 : -1];
 #endif
 }
 
-class BoostDeck : public bmw::PluginApp {
+class BoostDeck : public TextApp<BoostDeck> {
     int fd_;
     unsigned poll_generation_;
     bd_frame frame_;
@@ -64,7 +67,8 @@ class BoostDeck : public bmw::PluginApp {
 public:
     BoostDeck(bmw::IDispatcher& d, bmw::BasicString<char> name, unsigned maj, unsigned mn,
               bmw::RHMIInterfaceVersion rhmi, const bmw::Bundle& cfg, const bmw::Bundle& res)
-        : bmw::PluginApp(d,name,maj,mn,rhmi,cfg,res), fd_(-1), poll_generation_(0),
+        : TextApp<BoostDeck>(d,name,maj,mn,rhmi,cfg,res,kCollector,kVitalsPoll,120u,127u),
+          fd_(-1), poll_generation_(0),
           received_(0), collector_(-1), stopping_(false), gauges_visible_(false),
           color_(0),
 #ifdef PERF_LAB
@@ -78,6 +82,13 @@ public:
     virtual bool onFinalize() { shutdown(); return true; }
     virtual bool invokeDataUpdate(unsigned key, const bmw::Parcel& data);
     bool gaugeVisibility(const bmw::Parcel&);
+    bool vitalsVisibility(const bmw::Parcel& event) {
+        bool show;
+        if (!event.readBool(show)) return true;
+        if (show) runContinuously(kVitalsArgs,kVitalsArgs,120u);
+        else stopWorker();
+        return true;
+    }
     template <unsigned Color> bool changeColor(const bmw::Parcel&) {
         selectColor(Color);
         return true;
@@ -106,6 +117,7 @@ public:
     }
     void shutdown() {
         gauges_visible_=false;
+        shutdownWorker();
         stopCollector();
         if (fd_>=0) { close(fd_); fd_=-1; }
     }
@@ -134,6 +146,8 @@ bool BoostDeck::onInit() {
     // BMW sends event 11 with a bool when this HMI state becomes visible or hidden.
     action.m_exec=&bmw::Delegate<bool,const bmw::Parcel&>::execImpl<BoostDeck,&BoostDeck::gaugeVisibility>;
     addHandler(100u,11u,action);
+    action.m_exec=&bmw::Delegate<bool,const bmw::Parcel&>::execImpl<BoostDeck,&BoostDeck::vitalsVisibility>;
+    addHandler(105u,11u,action);
     typedef bmw::Delegate<bool,const bmw::Parcel&> Action;
     typedef bool (*Handler)(void*,const bmw::Parcel&);
     static const Handler colorHandlers[] = {
@@ -190,7 +204,7 @@ bool BoostDeck::gaugeVisibility(const bmw::Parcel& event) {
 void BoostDeck::startVisibleCollector() {
     if (!gauges_visible_ || collector_>0 || fd_<0 ||
         bd_mono_ms()<retry_at_) return;
-    const DiagnosticGateway gateway("/var/opt/hmi/data/ID5/Plugins/" "BoostDeck" "/gateway-ip.txt");
+    const DiagnosticGateway gateway(ID6_PLUGIN_ROOT "/BoostDeck/gateway-ip.txt");
     const char *args[]={kCollector,"--host",gateway.host(),"--session",
 #ifdef PERF_LAB
                        "--ethanol",
@@ -219,7 +233,7 @@ void BoostDeck::postPoll() {
 }
 
 bool BoostDeck::invokeDataUpdate(unsigned key, const bmw::Parcel& data) {
-    if (key!=kPollKey) return bmw::PluginApp::invokeDataUpdate(key,data);
+    if (key!=kPollKey) return TextApp<BoostDeck>::invokeDataUpdate(key,data);
     unsigned generation;
     if (!data.readUInt32(generation)) return false;
     if (fd_<0 || generation!=poll_generation_) return true;

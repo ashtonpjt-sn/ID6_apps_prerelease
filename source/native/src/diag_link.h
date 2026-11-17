@@ -46,6 +46,13 @@ int  diag_hsfz_connect(const char *host, unsigned port);
 int  diag_hsfz_exchange(int fd, unsigned ecu, const unsigned char *uds, unsigned n,
                         const unsigned char *prefix, unsigned pn, unsigned char *reply, unsigned cap,
                         unsigned timeout_ms, unsigned *negative);
+/* A functional request to every control unit (target DF), HSFZ only. Each positive or negative reply to
+   service uds[0] goes to the callback with its source address; a unit still working (NRC 78) extends the
+   wait by 2 s. Collection ends idle_ms after the latest reply, or after idle_ms with none, and never later
+   than total_ms. The number of replies, or -1 when the connection failed. */
+typedef void (*diag_reply_fn)(void *context, unsigned source, const unsigned char *uds, unsigned size);
+int  diag_hsfz_functional(int fd, const unsigned char *uds, unsigned n, unsigned idle_ms,
+                          unsigned total_ms, diag_reply_fn callback, void *context);
 /* One-shot: hold the lease for the run, retrying up to 2000 ms. 0 when not held, errno from the last try. */
 int  diag_link_reserve_oneshot(struct diag_link *);
 

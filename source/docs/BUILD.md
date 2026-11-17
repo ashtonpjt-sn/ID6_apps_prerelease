@@ -7,6 +7,8 @@ make -C native test
 python3 tools/test_probe_signals.py
 ```
 
+`make -C native test` also drives the Warm-Up, Performance Timer, Fault Scanner, BoostDeck and ShiftDeck plugin classes against a host stand-in for the HMI framework, and their workers against a simulated gateway. See [NEW_APPS.md](NEW_APPS.md#tests).
+
 ## Native payload
 
 If you need the toolchain for a native build, the [QNX SDP 6.5 archive](https://archive.org/details/qnxsdp-65.7z) includes the SDK and a license key generator, according to the archive listing.
@@ -29,6 +31,15 @@ sh native/build.sh
 ```
 
 The script builds the native libraries and diagnostic workers. The dashboard diagnostic workers use the [MOST fallback](MOST.md), which loads the DSI library at runtime. The MHD+ Suite package also includes the HSFZ Exhaust Flap worker from PR #29 as `MhdMaps/exhaust-flap-worker-qnx`. Use `native/tools/merge_exhaust_flap_page.py` to assemble the submenu from the original flap artwork and the MHD+ Suite image archive. The packaged XML and matching image archives must be deployed together.
+
+The script also builds Warm-Up, Performance Timer and Fault Scanner, BoostDeck's More vitals mode and ShiftDeck's gear estimate ([NEW_APPS.md](NEW_APPS.md)). Their layouts are in `native/plugin/`. `make -C native text-assets` writes the three new apps' image archives. To stage the five changed apps with the published dashboard images, the GEAR legend and `gateway-ip.txt`:
+
+```sh
+python3 native/tools/stage_apps.py --package ../packages/dashboard.zip --build native/out \
+    --gateway GATEWAY_IP STAGE_DIR
+```
+
+For a panel other than 1280 × 480, rescale each staged folder with `native/tools/rescale_layout.py` ([PORTING.md](PORTING.md#4-port-the-layout-to-another-panel-size)).
 
 ## New firmware
 

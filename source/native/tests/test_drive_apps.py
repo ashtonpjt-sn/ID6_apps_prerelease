@@ -72,9 +72,9 @@ class DriveAppsTest(unittest.TestCase):
             listener.settimeout(2)
             self.run_worker("shift-deck", ["--cycles", "1", "--udp-port", str(listener.getsockname()[1])],
                             [("010c", ["410c61a8"]), ("010d", ["410d64"])])
-            sampled_ms, rpm, kph = struct.unpack("=Qii", listener.recv(64))
+            sampled_ms, rpm, kph, gear, reserved = struct.unpack("=Qiiii", listener.recv(64))
             self.assertGreater(sampled_ms, 0)
-            self.assertEqual((rpm,kph), (6250,100))
+            self.assertEqual((rpm,kph,gear,reserved), (6250,100,0,0))
 
 
     def test_shift_worker_waits_for_a_busy_gateway(self):
@@ -122,7 +122,7 @@ class DriveAppsTest(unittest.TestCase):
                 [BUILD/"shift-deck", "--host", "127.0.0.1", "--port", str(self.closed_port()),
                  "--udp-port", str(udp.getsockname()[1]), "--cycles", "40"],
                 capture_output=True, text=True, timeout=20, env=self.most_env())
-            _, rpm, kph = struct.unpack("=Qii", udp.recv(64))
+            _, rpm, kph, _, _ = struct.unpack("=Qiiii", udp.recv(64))
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertEqual((rpm, kph), ((0x1A*256+0xF8)//4, 60))
         self.assertIn("transport: MOST", r.stderr)
@@ -240,7 +240,7 @@ class DriveAppsTest(unittest.TestCase):
                         except socket.timeout:
                             continue
                         if name == "s":
-                            shift_ok += struct.unpack("=Qii", data[:16])[1] == 1726
+                            shift_ok += struct.unpack("=Qiiii", data[:24])[1] == 1726
                         else:
                             boost_ok += int(data.decode().split()[3]) != 0
                     self.assertIsNone(shift.poll())

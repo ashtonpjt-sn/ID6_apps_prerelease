@@ -205,7 +205,29 @@ int main(int argc, char **argv) {
     return 0;
 }
 #elif defined(SHIFT_DECK_ONLY)
+#include "drive_core.h"
 #include "drive_frame.h"
+
+/* The learned gear calibration (engine rpm per km/h at a 1.000 ratio), 0 when none is saved. */
+static double load_calibration(const char *path) {
+    FILE *f = path ? fopen(path, "r") : 0;
+    double factor = 0;
+    if (!f) return 0;
+    if (fscanf(f, "%lf", &factor) != 1) factor = 0;
+    fclose(f);
+    return factor;
+}
+
+static void save_calibration(const char *path, double factor) {
+    char temporary[256];
+    FILE *f;
+    if (!path || snprintf(temporary, sizeof temporary, "%s.new", path) >= (int)sizeof temporary) return;
+    f = fopen(temporary, "w");
+    if (!f) return;
+    fprintf(f, "%.4f\n", factor);
+    if (fclose(f) == 0) rename(temporary, path);
+    else remove(temporary);
+}
 
 /* The raw PID value, -1 when the ECU refused it. Returns 0 read, -1 link lost, -3 skip this frame. */
 static int read_live_pid(struct diag_link *link, unsigned char pid, int width, int *value) {
@@ -221,10 +243,12 @@ static int read_live_pid(struct diag_link *link, unsigned char pid, int width, i
 int main(int argc, char **argv) {
     struct diag_link_cfg cfg={0,6801,DIAG_AUTO,DIAG_LOOP,"shiftdeck",1};
     struct diag_link link;
+    const char *calibration=0;
     unsigned udp_port=DRIVE_PORT, cycles=0, count=0;
     pid_t parent=getppid();
     struct sockaddr_in dest;
     int sock, i, lost;
+    gear_state gears;
 #ifdef NATIVE_FAST
     uint64_t speed_due=0;
     int last_speed=-1;
@@ -234,6 +258,7 @@ int main(int argc, char **argv) {
         else if (!strcmp(argv[i],"--port") && i+1<argc) cfg.port=number(argv[++i],1,65535);
         else if (!strcmp(argv[i],"--udp-port") && i+1<argc) udp_port=number(argv[++i],1,65535);
         else if (!strcmp(argv[i],"--cycles") && i+1<argc) cycles=number(argv[++i],1,1000);
+        else if (!strcmp(argv[i],"--calibration") && i+1<argc) calibration=argv[++i];
         else if (!strcmp(argv[i],"--transport") && i+1<argc && !strcmp(argv[i+1],"auto")) ++i;
         else if (!strcmp(argv[i],"--transport") && i+1<argc && !strcmp(argv[i+1],"hsfz")) { cfg.transport=DIAG_HSFZ; ++i; }
         else if (!strcmp(argv[i],"--transport") && i+1<argc && !strcmp(argv[i+1],"most")) { cfg.transport=DIAG_MOST; ++i; }
@@ -242,6 +267,7 @@ int main(int argc, char **argv) {
     if ((!cfg.host && cfg.transport==DIAG_HSFZ) || parent<=1) return 2;
     diag_link_signals();
     diag_link_init(&link,&cfg);
+    gear_init(&gears,load_calibration(calibration));
     sock=socket(AF_INET,SOCK_DGRAM,0);
     if (sock<0) return 1;
     memset(&dest,0,sizeof dest);
@@ -266,9 +292,13 @@ int main(int argc, char **argv) {
 #endif
             if (rc==-1) diag_link_drop(&link);
             else if (!rc) {
+                int learned=0;
                 f.sampled_ms=bd_mono_ms();
                 f.rpm=rpm;
                 f.kph=kph;
+                f.gear=gear_update(&gears,rpm,kph,&learned);
+                f.reserved=0;
+                if (learned) save_calibration(calibration,gears.factor);
                 if (sendto(sock,&f,sizeof f,0,(struct sockaddr *)&dest,sizeof dest)!=(ssize_t)sizeof f) break;
                 diag_link_should_yield(&link,f.sampled_ms);
             }
@@ -340,6 +370,9 @@ static int send_frame(int sock, struct sockaddr_in *dest, bd_frame *f, uint64_t 
     return len > 0 && sendto(sock, packet, (size_t)len, 0,
         (struct sockaddr *)dest, sizeof *dest) == len;
 }
+/* BoostDeck's More vitals page runs this worker with --vitals (vitals.c). */
+int vitals_main(int argc, char **argv);
+
 int main(int argc, char **argv) {
     const char *host = 0;
     unsigned port = 6801, udp_port = BD_UDP_PORT, cycles = 0, count = 0, i;
@@ -371,6 +404,8 @@ int main(int argc, char **argv) {
     int ethanol=0;
     uint64_t next_ethanol=0;
 #endif
+    for (i = 1; i < (unsigned)argc; ++i)
+        if (!strcmp(argv[i], "--vitals")) return vitals_main(argc, argv);
     for (i = 1; i < (unsigned)argc; ++i) {
         if (!strcmp(argv[i], "--demo")) demo = 1;
 #ifdef PERF_LAB

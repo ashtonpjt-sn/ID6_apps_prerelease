@@ -6,6 +6,11 @@
 #include <string.h>
 #include <sys/socket.h>
 
+// Where the HMI loads plugins from. Host tests point it at a scratch folder.
+#ifndef ID6_PLUGIN_ROOT
+#define ID6_PLUGIN_ROOT "/var/opt/hmi/data/ID5/Plugins"
+#endif
+
 class DiagnosticGateway {
     char host_[16];
 

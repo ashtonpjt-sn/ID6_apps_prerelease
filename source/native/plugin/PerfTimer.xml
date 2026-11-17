@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<pluginApps>
+  <pluginApp applicationType="VehicleInformation" applicationWeight="212" text="Performance Timer">
+    <entryButton id="1" action="10">
+      <properties>
+        <property id="23" value="2" />
+      </properties>
+    </entryButton>
+    <actions>
+      <hmiAction id="10" target="100" />
+      <raAction id="41" />
+    </actions>
+    <models>
+      <raDataModel id="50" modelType="Richtext" />
+      <raDataModel id="51" modelType="Richtext" />
+      <raDataModel id="52" modelType="Richtext" />
+      <raDataModel id="53" modelType="Richtext" />
+      <raDataModel id="54" modelType="Richtext" />
+      <raDataModel id="55" modelType="Richtext" />
+      <raDataModel id="56" modelType="Richtext" />
+    </models>
+    <hmiStates>
+      <hmiState id="100" text="Performance Timer">
+        <optionComponents>
+          <button id="30" action="41" text="Reset best results" />
+        </optionComponents>
+        <components>
+          <label id="150" model="50">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="22" />
+              <property id="9" value="1176" />
+              <property id="10" value="55" />
+            </properties>
+          </label>
+          <label id="151" model="51">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="92" />
+              <property id="9" value="1176" />
+              <property id="10" value="55" />
+            </properties>
+          </label>
+          <label id="152" model="52">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="152" />
+              <property id="9" value="1176" />
+              <property id="10" value="55" />
+            </properties>
+          </label>
+          <label id="153" model="53">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="212" />
+              <property id="9" value="1176" />
+              <property id="10" value="55" />
+            </properties>
+          </label>
+          <label id="154" model="54">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="272" />
+              <property id="9" value="1176" />
+              <property id="10" value="55" />
+            </properties>
+          </label>
+          <label id="155" model="55">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="332" />
+              <property id="9" value="1176" />
+              <property id="10" value="55" />
+            </properties>
+          </label>
+          <label id="156" model="56">
+            <properties>
+              <property id="20" value="52" />
+              <property id="21" value="398" />
+              <property id="9" value="1176" />
+              <property id="10" value="50" />
+            </properties>
+          </label>
+        </components>
+      </hmiState>
+    </hmiStates>
+  </pluginApp>
+</pluginApps>

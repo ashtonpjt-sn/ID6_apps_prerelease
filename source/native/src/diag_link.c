@@ -101,6 +101,49 @@ int diag_hsfz_exchange(int fd, unsigned ecu, const unsigned char *uds, unsigned 
     return -1;
 }
 
+int diag_hsfz_functional(int fd, const unsigned char *uds, unsigned uds_size, unsigned idle_ms,
+                         unsigned total_ms, diag_reply_fn callback, void *context) {
+    unsigned char request[24] = {0,0,0,0,0,1,0xf4,0xdf};
+    unsigned char header[6], body[4096];
+    uint64_t start = bd_mono_ms(), end = start + total_ms, idle = start + idle_ms;
+    int replies = 0;
+    if (!uds_size || uds_size > sizeof request - 8) return -1;
+    request[3] = (unsigned char)(uds_size+2);
+    memcpy(request+8,uds,uds_size);
+    if (!transfer(fd,request,8+uds_size,1,start+1000)) return -1;
+    while (diag_running) {
+        uint64_t deadline = idle < end ? idle : end;
+        uint32_t len;
+        unsigned ctrl;
+        if (bd_mono_ms() >= deadline) break;
+        if (!ready(fd,POLLIN,deadline)) {
+            if (bd_mono_ms() >= deadline) break;
+            return -1;
+        }
+        /* A frame that has started must arrive whole within a second. */
+        if (!transfer(fd,header,6,0,bd_mono_ms()+1000)) return -1;
+        len=((uint32_t)header[0]<<24)|((uint32_t)header[1]<<16)|((uint32_t)header[2]<<8)|header[3];
+        ctrl=((unsigned)header[4]<<8)|header[5];
+        if (len>sizeof body || !transfer(fd,body,len,0,bd_mono_ms()+1000)) return -1;
+        if (ctrl==0x12) {
+            unsigned char alive[8]={0,0,0,2,0,0x13,0,0xf4};
+            if (!transfer(fd,alive,8,1,bd_mono_ms()+1000)) return -1;
+            continue;
+        }
+        if (ctrl!=1 || len<3 || body[1]!=0xf4) continue;
+        if (len>=5 && body[2]==0x7f && body[3]==uds[0] && body[4]==0x78) {
+            idle = bd_mono_ms() + idle_ms + 2000;
+            continue;
+        }
+        if (!(body[2]==(unsigned char)(uds[0]+0x40) || (len>=4 && body[2]==0x7f && body[3]==uds[0])))
+            continue;
+        ++replies;
+        callback(context, body[0], body+2, len-2);
+        idle = bd_mono_ms() + idle_ms;
+    }
+    return replies;
+}
+
 /* A DSI send has no timeout, so once MOST is in use SIGALRM's default action bounds every loop and the
  * shutdown. */
 enum { LOOP_FAILS_TO_MOST = 5, MOST_OPEN_MS = 2000, MOST_RETRY_MS = 30000, MOST_WAIT_MIN_MS = 2000,
