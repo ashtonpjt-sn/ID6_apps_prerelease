@@ -51,4 +51,14 @@ Use an ECU-matched diagnostic definition or capture the request from a trusted l
 - Change the layout only when needed. Use `native/tools/make_bars.py` or `make_drive_apps.py`, regenerate assets, and keep model IDs, image IDs, worker formats, and connector IDs consistent.
 - Build and install with [BUILD.md](BUILD.md). While parked, compare the display with a trusted tool on the same car. Check the blank or stale state with diagnostics unavailable. Record the tested ECU and firmware separately from supported but untested combinations.
 
+## 4. Port the layout to another panel size
+
+The raw dashboard ZIP is laid out for 1280 × 480. Read the resolution iDrive drives with `LayerManagerControl get screen 0` (through `on -f hu-omap` on a split-node unit); it can differ from the panel's advertised size. For a panel with the same 8:3 aspect, such as 1440 × 540, rescale each packaged app folder:
+
+```sh
+python3 native/tools/rescale_layout.py BoostDeck BoostDeck-1440x540 --to 1440x540
+```
+
+The tool scales component positions and sizes in the layout XML and resamples the PNGs in the image archive by the same factor, so each image keeps its relationship to its box. It keeps every model, image, action, and connector ID and copies the manifest, plugin library, worker, and `gateway-ip.txt` byte for byte, so no native rebuild is needed. It refuses an aspect change and a layout that would leave the panel. On firmware that has not run the dashboard before, load the unmodified 1280 × 480 folders first so a framework problem is not mistaken for a layout problem, then swap in the rescaled folders.
+
 Share a minimal signal table and sanitized examples. Avoid uploading full vehicle captures, identifying data, or framework libraries.

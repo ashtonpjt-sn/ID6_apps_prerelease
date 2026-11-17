@@ -47,3 +47,4 @@ test: build/boostdeck-collector build/shift-deck build/mhd-maps build/engine-cod
 	$(PYTHON) -B tests/test_drive_apps.py
 	$(PYTHON) -B tests/test_oneshot_most.py
 	$(PYTHON) -B tests/test_transport.py
+	$(PYTHON) -B tests/test_rescale_layout.py
